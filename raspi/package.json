@@ -11,8 +11,12 @@
     "url": "git+https://github.com/ashleylovespizza/brownphone.git"
   },
   "dependencies": {
-  	"node-aplay": "^1.0.3",
-    "wiring-pi": ">=2.1.1",
+    "deep-diff": "^0.3.4",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "https": "^1.0.0",
+    "node-aplay": "^1.0.3",
+    "wiring-pi": ">=2.1.1"
   },
   "author": "ashleylovespizza",
   "license": "ISC"
