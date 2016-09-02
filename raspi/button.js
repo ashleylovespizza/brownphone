@@ -1,21 +1,44 @@
-var wpi = require('wiring-pi');
+//var wpi = require('wiring-pi');
 var Sound = require('node-aplay');
+var fs = require('fs');
 
-var testSound = new Sound('test.wav');
-console.log("started");
+var mySound;
 
-// GPIO pin of the button
-var configPin = 7;
+var soundPath = "feed/sounds/";
+// need to make sure to grab this on every cradle pickup... 
+//    or maybe just have the app restart once a day?
+var allsounds = fs.readdirSync(soundPath);
+console.log(allsounds);
 
-wpi.setup('wpi');
+var test = new Sound('feed/sounds/new_1472780372380.wav')
 
-wpi.pinMode(configPin, wpi.INPUT);
-wpi.pullUpDnControl(configPin, wpi.PUD_UP);
+for (var i=0; i<allsounds.length; i++){
+	if (allsounds[i].substring(0,4) == 'new_') {
+		//new file - rename, and play it!
+		var newname = allsounds[i].substring(4);
+	//	fs.rename(soundPath + allsounds[i], soundPath + newname);
+		console.log("play newname "+soundPath + allsounds[i]);
+		mySound = new Sound(soundPath + allsounds[i]);
+		mySound.play();
+		break;
+	}
+}
 
-
-wpi.wiringPiISR(configPin, wpi.INT_EDGE_FALLING, function() {
-//  if (wpi.digitalRead(configPin)) {
-       	console.log("push");
-       	testSound.play();
- // }
-});
+console.log("started, playing "+mySound);
+mySound.play();
+//
+//// GPIO pin of the button
+//var configPin = 7;
+//
+//wpi.setup('wpi');
+//
+//wpi.pinMode(configPin, wpi.INPUT);
+//wpi.pullUpDnControl(configPin, wpi.PUD_UP);
+//
+//
+//wpi.wiringPiISR(configPin, wpi.INT_EDGE_FALLING, function() {
+////  if (wpi.digitalRead(configPin)) {
+//       	console.log("push");
+//       	testSound.play();
+// // }
+//});//
