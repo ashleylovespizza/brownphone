@@ -1,0 +1,23 @@
+{
+  "name": "phonecontrol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashleylovespizza/brownphone.git"
+  },
+  "dependencies": {
+    "deep-diff": "^0.3.4",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "https": "^1.0.0",
+    "node-aplay": "^1.0.3",
+    "wiring-pi": ">=2.1.1"
+  },
+  "author": "ashleylovespizza",
+  "license": "ISC"
+}
