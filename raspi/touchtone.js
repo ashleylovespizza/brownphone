@@ -102,16 +102,12 @@ function checkForPress() {
 
 
 wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_RISING, function(delta) {
-	if( wpi.digitalRead(row1Pin) && delta > deltaVal){
-		
-
+	if( wpi.digitalRead(row1Pin)){
 		var now = Number(Date.now());
 		console.log("row 1: " + String(now - pinGrid[0][0][2])+", "+(now - pinGrid[0][1][2])+", "+(now - pinGrid[0][2][2]));
 		console.log(" ")
 
-		if (   now - pinGrid[0][0][2] > timeThreshhold
-			&& now - pinGrid[0][1][2] > timeThreshhold
-			&& now - pinGrid[0][2][2] > timeThreshhold) {
+		if (   now - row1Last > timeThreshhold) {
 			console.log("REAL PRESS!");
 
 	       	pinGrid[0][0][0] = true;
@@ -120,35 +116,61 @@ wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_RISING, function(delta) {
 	       	checkForPress();
 	    }
 
-	    pinGrid[0][0][2] = now;
-	    pinGrid[0][1][2] = now;
-	    pinGrid[0][2][2] = now;
+	    row1Last = now;
 	}
 });
 wpi.wiringPiISR(row2Pin, wpi.INT_EDGE_RISING, function(delta) {
-		if (wpi.digitalRead(row2Pin) && delta > deltaVal){
+		if (wpi.digitalRead(row2Pin)){
 			console.log("row 2: "  );
 			console.log(" ")
 
-
 			var now = Date.now();
-			if (   now - pinGrid[1][0][2] > timeThreshhold
-				&& now - pinGrid[1][1][2] > timeThreshhold
-				&& now - pinGrid[1][2][2] > timeThreshhold) {
+			if (   now - row2Last > timeThreshhold) {
 			console.log("REAL PRESS!");
 		       	pinGrid[1][0][0] = true;
 		       	pinGrid[1][1][0] = true;
 		       	pinGrid[1][2][0] = true;
-
-
 		       	checkForPress();
 			}
-		    pinGrid[1][0][0] = now;
-		    pinGrid[1][1][0] = now;
-		    pinGrid[1][2][0] = now;
+			row2Last = now;
 
 		}		
 });
+wpi.wiringPiISR(row3Pin, wpi.INT_EDGE_RISING, function(delta) {
+		if (wpi.digitalRead(row3Pin)){
+			console.log("row 3: "  );
+			console.log(" ")
+
+			var now = Date.now();
+			if (   now - row3Last > timeThreshhold) {
+			console.log("REAL PRESS!");
+		       	pinGrid[2][0][0] = true;
+		       	pinGrid[2][1][0] = true;
+		       	pinGrid[2][2][0] = true;
+		       	checkForPress();
+			}
+			row3Last = now;
+
+		}		
+});
+wpi.wiringPiISR(row4Pin, wpi.INT_EDGE_RISING, function(delta) {
+		if (wpi.digitalRead(row4Pin)){
+			console.log("row 4: "  );
+			console.log(" ")
+
+			var now = Date.now();
+			if (   now - row4Last > timeThreshhold) {
+			console.log("REAL PRESS!");
+		       	pinGrid[3][0][0] = true;
+		       	pinGrid[3][1][0] = true;
+		       	pinGrid[3][2][0] = true;
+		       	checkForPress();
+			}
+			row4Last = now;
+
+		}		
+});
+
 
 
 wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_RISING, function(delta) {
@@ -156,13 +178,8 @@ wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_RISING, function(delta) {
 		var now = Date.now();
 		console.log("col 1 : "+ String(now - pinGrid[0][0][2]) + ", "+ (now - pinGrid[1][0][2]) +" , "+(now - pinGrid[2][0][2]) +", "+(now - pinGrid[3][0][2]) );
 		console.log(" ")
-
-		if (   now - pinGrid[0][0][2] > timeThreshhold
-			&& now - pinGrid[1][0][2] > timeThreshhold
-			&& now - pinGrid[2][0][2] > timeThreshhold
-			&& now - pinGrid[3][0][2] > timeThreshhold) {
+		if (   now - col1Last > timeThreshhold) {
 			console.log("REAL PRESS!");
-
 	       	pinGrid[0][0][1] = true;
 	       	pinGrid[1][0][1] = true;
 	       	pinGrid[2][0][1] = true;
@@ -170,72 +187,44 @@ wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_RISING, function(delta) {
 
 	     	checkForPress();
 		}
-
-	    pinGrid[0][0][2]= now;
-		pinGrid[1][0][2]= now;
-		pinGrid[2][0][2]= now;
-		pinGrid[3][0][2] = now;
-
-
+	    col1Last = now;
 	}
 });
 wpi.wiringPiISR(col2Pin, wpi.INT_EDGE_RISING, function(delta) {
 	if ( wpi.digitalRead(col2Pin) ){
 		var now = Date.now();
-		console.log("col 2: " + String(now - pinGrid[0][1][2])  +", "+ (now - pinGrid[1][1][2])  +", "+ (now - pinGrid[2][1][2])  + ", "+ (now - pinGrid[3][1][2]) );
+		console.log("col 2 - "+now-col2Last);
+	//	console.log("col 2: " + String(now - pinGrid[0][1][2])  +", "+ (now - pinGrid[1][1][2])  +", "+ (now - pinGrid[2][1][2])  + ", "+ (now - pinGrid[3][1][2]) );
 		console.log(" ")
 
-		if (   now - pinGrid[0][1][2] > timeThreshhold
-			&& now - pinGrid[1][1][2] > timeThreshhold
-			&& now - pinGrid[2][1][2] > timeThreshhold
-			&& now - pinGrid[3][1][2] > timeThreshhold) {
+		if (   now - col2Last > timeThreshhold) {
 			console.log("REAL PRESS!");
 
-  		pinGrid[0][1][1] = true;
-       	pinGrid[1][1][1] = true;
-       	pinGrid[2][1][1] = true;
-       	pinGrid[3][1][1] = true;
-
-      	checkForPress();
-
-
+	  		pinGrid[0][1][1] = true;
+	       	pinGrid[1][1][1] = true;
+	       	pinGrid[2][1][1] = true;
+	       	pinGrid[3][1][1] = true;
+	      	checkForPress();
 		}
-	    pinGrid[0][1][2]= now;
-		pinGrid[1][1][2]= now;
-		pinGrid[2][1][2]= now;
-		pinGrid[3][1][2] = now;
+	    col2Last = now;
 	}
 	
 });
 
 wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
 	if (wpi.digitalRead(col3Pin)) {
-		console.log("col 3: ");
+		console.log("col 3: "+now-col3Last);
 		
 		var now = Date.now();
-		if (   now - pinGrid[0][2][2] > timeThreshhold
-			&& now - pinGrid[1][2][2] > timeThreshhold
-			&& now - pinGrid[2][2][2] > timeThreshhold
-			&& now - pinGrid[3][2][2] > timeThreshhold) {
+		if (   now - col3Last > timeThreshhold) {
 			console.log("REAL PRESS!");
-
-
-			console.log(" ")
 	       	pinGrid[0][2][1] = true;
 	       	pinGrid[1][2][1] = true;
 	       	pinGrid[2][2][1] = true;
 	       	pinGrid[3][2][1] = true;
-
-
 	       	checkForPress();
 		}
-
-
-	    var now = Date.now();
-	    pinGrid[0][2][2]= now;
-		pinGrid[1][2][2]= now;
-		pinGrid[2][2][2]= now;
-		pinGrid[3][2][2] = now;
+		col3Last = now;
 
 	}
 	
