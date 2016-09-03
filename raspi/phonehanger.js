@@ -11,7 +11,7 @@ var soundPath = "feed/sounds/";
 //console.log(allsounds);
 
 //var test = new Sound('feed/sounds/new_1472780372380.wav')
-var test = new Sound('test.wav');
+var test = new Sound('test2.mp3');
 
 //for (var i=0; i<allsounds.length; i++){
 //	if (allsounds[i].substring(0,4) == 'new_') {
@@ -40,14 +40,18 @@ wpi.pullUpDnControl(configPin, wpi.PUD_UP);
 
 
 wpi.wiringPiISR(configPin, wpi.INT_EDGE_BOTH, function(delta) {
-//  if (wpi.digitalRead(configPin)) {
-//        console.log("delta: "+delta);
 	console.log("interrupt");  
 
 	var readval = wpi.digitalRead(configPin);
 	console.log(readval);
+	if (readval == 1) {
+		test.stop();
+	} else {
+
       test.play();
- // }
+	}
+	
+ 
 });
 
 
