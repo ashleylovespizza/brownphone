@@ -120,7 +120,7 @@ wpi.wiringPiISR(col2Pin, wpi.INT_EDGE_FALLING, function() {
 
 wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_FALLING, function() {
 	if (wpi.digitalRead(col3Pin)) {
-		console.log("col 3: "+readval);
+		console.log("col 3: ");
        	pinGrid[0][2]++;
        	pinGrid[1][2]++;
        	pinGrid[2][2]++;
