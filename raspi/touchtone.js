@@ -18,8 +18,6 @@ var pinGrid = [ [0, 0, 0]
  			  , [0, 0, 0]];
 
 //test
-pinGrid[1][2] = 3;
-console.log(pinGrid);
 
 wpi.setup('wpi');
 
@@ -52,4 +50,7 @@ wpi.pullUpDnControl(hangupPin, wpi.PUD_UP);
 
 wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_FALLING, function() {
        	console.log("row1");
+       	pinGrid[0][0]++;
+       	
+console.log(pinGrid);
 });
