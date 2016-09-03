@@ -11,7 +11,8 @@ var soundPath = "feed/sounds/";
 //console.log(allsounds);
 
 //var test = new Sound('feed/sounds/new_1472780372380.wav')
-var test = new Sound('test2.mp3');
+
+var test = new Sound('test2.wav');
 
 //for (var i=0; i<allsounds.length; i++){
 //	if (allsounds[i].substring(0,4) == 'new_') {
@@ -48,7 +49,7 @@ wpi.wiringPiISR(configPin, wpi.INT_EDGE_BOTH, function(delta) {
 		test.stop();
 	} else {
 
-      test.play();
+             test.play();
 	}
 	
  
