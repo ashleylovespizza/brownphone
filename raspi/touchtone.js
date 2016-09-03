@@ -56,6 +56,7 @@ function resetPinGrid() {
  			  , [0, 0, 0]
  			  , [0, 0, 0]
  			  , [0, 0, 0]];
+	console.log("---------------------------");
 }
 function checkForPress() {
 	var maxVal = 1;
@@ -68,11 +69,14 @@ function checkForPress() {
 			}
 		}
 	}
-	console.log(maxLocation);
+//	console.log(maxLocation);
 
 	if (maxLocation.length > 0) {
+		console.log(maxLocation);
 		console.log("The number "+numPad[maxLocation[0]][maxLocation[1]]+" has been pressed!");
 		resetPinGrid();
+	} else {
+		console.log("errr");
 	}
 }
 
