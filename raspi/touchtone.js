@@ -15,8 +15,8 @@ var row1Pin = 9
 
 wpi.setup('wpi');
 
-wpi.pinMode(configPin, wpi.INPUT);
-wpi.pullUpDnControl(configPin, wpi.PUD_UP);
+wpi.pinMode(row1Pin, wpi.INPUT);
+wpi.pullUpDnControl(row1Pin, wpi.PUD_UP);
 
 
 wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_FALLING, function() {
