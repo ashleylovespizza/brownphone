@@ -45,6 +45,19 @@ wpi.pullUpDnControl(col3Pin, wpi.PUD_UP);
 wpi.pinMode(hangupPin, wpi.INPUT);
 wpi.pullUpDnControl(hangupPin, wpi.PUD_UP);
 
+function checkForPress() {
+	var maxVal = 1;
+	var maxLocation = [];
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 3; j++) {
+			if (pinGrid[i][j] > maxVal) {
+				maxVal = pinGrid[i][j];
+				maxLocation = [i, j];
+			}
+		}
+	}
+	console.log(maxLocation);
+}
 
 
 
@@ -56,6 +69,17 @@ wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_FALLING, function() {
        	pinGrid[0][0]++;
        	pinGrid[0][1]++;
        	pinGrid[0][2]++;
-
-console.log(pinGrid);
+       	checkForPress();
 });
+
+
+wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_FALLING, function() {
+
+       	console.log("col1");
+       	pinGrid[0][0]++;
+       	pinGrid[1][0]++;
+       	pinGrid[2][0]++;
+       	pinGrid[3][0]++;
+       	checkForPress();
+});
+
