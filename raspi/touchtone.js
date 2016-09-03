@@ -62,10 +62,9 @@ function checkForPress() {
 
 
 wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_FALLING, function() {
-		var readval = wpi.digitalRead(configPin);
-	console.log(readval);
+		var readval = wpi.digitalRead(row1Pin);
+	console.log("row 1: "+readval);
 
-       	console.log("row1");
        	pinGrid[0][0]++;
        	pinGrid[0][1]++;
        	pinGrid[0][2]++;
@@ -74,8 +73,8 @@ wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_FALLING, function() {
 
 
 wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_FALLING, function() {
-
-       	console.log("col1");
+		var readval = wpi.digitalRead(col1Pin);
+	console.log("col 1: "+readval);
        	pinGrid[0][0]++;
        	pinGrid[1][0]++;
        	pinGrid[2][0]++;
