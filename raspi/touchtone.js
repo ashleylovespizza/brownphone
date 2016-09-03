@@ -49,8 +49,13 @@ wpi.pullUpDnControl(hangupPin, wpi.PUD_UP);
 
 
 wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_FALLING, function() {
+		var readval = wpi.digitalRead(configPin);
+	console.log(readval);
+
        	console.log("row1");
        	pinGrid[0][0]++;
-       	
+       	pinGrid[0][1]++;
+       	pinGrid[0][2]++;
+
 console.log(pinGrid);
 });
