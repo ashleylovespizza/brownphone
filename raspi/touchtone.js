@@ -70,7 +70,7 @@ function checkForPress() {
 	}
 	console.log(maxLocation);
 
-	if (maxLocation.length() > 0) {
+	if (maxLocation.length > 0) {
 		console.log("The number "+numPad[maxLocation[0]][maxLocation[1]]+" has been pressed!");
 		resetPinGrid();
 	}
@@ -81,44 +81,51 @@ function checkForPress() {
 
 
 wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_FALLING, function() {
-		var readval = wpi.digitalRead(row1Pin);
-	console.log("row 1: "+readval);
+		if (wpi.digitalRead(row1Pin)) {
+			console.log("row 1: ");
+	       	pinGrid[0][0]++;
+	       	pinGrid[0][1]++;
+	       	pinGrid[0][2]++;
+	       	checkForPress();
+		}
 
-       	pinGrid[0][0]++;
-       	pinGrid[0][1]++;
-       	pinGrid[0][2]++;
-       	checkForPress();
 });
 
 
 
 wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_FALLING, function() {
-		var readval = wpi.digitalRead(col1Pin);
-	console.log("col 1: "+readval);
+	if( wpi.digitalRead(col1Pin) ){
+		console.log("col 1 ");
        	pinGrid[0][0]++;
        	pinGrid[1][0]++;
        	pinGrid[2][0]++;
        	pinGrid[3][0]++;
        	checkForPress();
+	}
+	
 });
 
 
 wpi.wiringPiISR(col2Pin, wpi.INT_EDGE_FALLING, function() {
-		var readval = wpi.digitalRead(col2Pin);
-	console.log("col 2: "+readval);
+	if ( wpi.digitalRead(col2Pin) ){
+		console.log("col 2: ");
        	pinGrid[0][1]++;
        	pinGrid[1][1]++;
        	pinGrid[2][1]++;
        	pinGrid[3][1]++;
        	checkForPress();
+	}
+	
 });
 
 wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_FALLING, function() {
-		var readval = wpi.digitalRead(col3Pin);
-	console.log("col 3: "+readval);
+	if (wpi.digitalRead(col3Pin)) {
+		console.log("col 3: "+readval);
        	pinGrid[0][2]++;
        	pinGrid[1][2]++;
        	pinGrid[2][2]++;
        	pinGrid[3][2]++;
        	checkForPress();
+	}
+	
 });
