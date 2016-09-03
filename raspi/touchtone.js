@@ -17,7 +17,13 @@ var pinGrid = [ [0, 0, 0]
  			  , [0, 0, 0]
  			  , [0, 0, 0]];
 
-//test
+
+// -1 = *
+// -2 = #
+var numPad =  [ [1, 2, 3]
+ 			  , [4, 5, 6]
+ 			  , [7, 8, 9]
+ 			  , [-1, 0, -2]];
 
 wpi.setup('wpi');
 
@@ -45,6 +51,12 @@ wpi.pullUpDnControl(col3Pin, wpi.PUD_UP);
 wpi.pinMode(hangupPin, wpi.INPUT);
 wpi.pullUpDnControl(hangupPin, wpi.PUD_UP);
 
+function resetPinGrid() {
+    pinGrid = [ [0, 0, 0]
+ 			  , [0, 0, 0]
+ 			  , [0, 0, 0]
+ 			  , [0, 0, 0]];
+}
 function checkForPress() {
 	var maxVal = 1;
 	var maxLocation = [];
@@ -57,7 +69,14 @@ function checkForPress() {
 		}
 	}
 	console.log(maxLocation);
+
+	if (maxLocation.length() > 0) {
+		console.log("The number "+numPad[maxLocation[0]][maxLocation[1]]+" has been pressed!");
+		resetPinGrid();
+	}
 }
+
+
 
 
 
@@ -72,6 +91,7 @@ wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_FALLING, function() {
 });
 
 
+
 wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_FALLING, function() {
 		var readval = wpi.digitalRead(col1Pin);
 	console.log("col 1: "+readval);
@@ -82,3 +102,23 @@ wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_FALLING, function() {
        	checkForPress();
 });
 
+
+wpi.wiringPiISR(col2Pin, wpi.INT_EDGE_FALLING, function() {
+		var readval = wpi.digitalRead(col2Pin);
+	console.log("col 2: "+readval);
+       	pinGrid[0][1]++;
+       	pinGrid[1][1]++;
+       	pinGrid[2][1]++;
+       	pinGrid[3][1]++;
+       	checkForPress();
+});
+
+wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_FALLING, function() {
+		var readval = wpi.digitalRead(col3Pin);
+	console.log("col 3: "+readval);
+       	pinGrid[0][2]++;
+       	pinGrid[1][2]++;
+       	pinGrid[2][2]++;
+       	pinGrid[3][2]++;
+       	checkForPress();
+});
