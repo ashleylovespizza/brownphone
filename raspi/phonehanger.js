@@ -2,9 +2,9 @@ var wpi = require('wiring-pi');
 var Sound = require('node-aplay');
 var fs = require('fs');
 
-var mySound;
+//var mySound;
 
-var soundPath = "feed/sounds/";
+//var soundPath = "feed/sounds/";
 // need to make sure to grab this on every cradle pickup... 
 //    or maybe just have the app restart once a day?
 //var allsounds = fs.readdirSync(soundPath);
@@ -26,8 +26,8 @@ var test = new Sound('test2.wav');
 //	}
 //}
 
-//console.log("started, playing "+mySound);
-test.play();
+console.log("started, playing "+test);
+//test.play();
 //
 //// GPIO pin of the button
 var configPin = 7;

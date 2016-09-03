@@ -1,6 +1,4 @@
 var wpi = require('wiring-pi');
-var Sound = require('node-aplay');
-var fs = require('fs');
 
 //// GPIO pin of the button
 var configPin =8;
