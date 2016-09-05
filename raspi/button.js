@@ -15,6 +15,7 @@ var soundPath = "feed/sounds/";
 
 //var test = new Sound('feed/sounds/new_1472780372380.wav')
 var test = new Sound('test.wav');
+//test.play();
 
 //for (var i=0; i<allsounds.length; i++){
 //	if (allsounds[i].substring(0,4) == 'new_') {

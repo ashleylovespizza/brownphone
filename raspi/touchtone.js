@@ -2,13 +2,13 @@ var wpi = require('wiring-pi');
 
 //// GPIO pin of the button
 // check gpio readall in the cli to check for the wPI numbers
-var row1Pin = 9
-  , row2Pin = 7
-  , row3Pin = 12
-  , row4Pin = 3
-  , col1Pin = 0
-  , col2Pin = 2
-  , col3Pin = 13
+var row1Pin = 6
+  , row2Pin = 10
+  , row3Pin = 28
+  , row4Pin = 27
+  , col1Pin = 11
+  , col2Pin = 26
+  , col3Pin = 29
   , hangupPin = 8;
 
 // this seems insane but bear with me...
