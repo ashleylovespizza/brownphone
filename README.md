@@ -36,7 +36,7 @@ The recordings are stored on a S3 server. For now this is hardcoded in the VR ap
 
 
 ## Deloy to Heroku 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ideo/ff_understandings)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ashleylovespizza/brownphone/tree/web-app)
 
 *Reset the heroku database*
 ``heroku pg:reset DATABASE``
