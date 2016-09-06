@@ -1,4 +1,8 @@
 var wpi = require('wiring-pi');
+var Sound = require('node-aplay');
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+
 
 //// GPIO pin of the button
 // check gpio readall in the cli to check for the wPI numbers
@@ -66,14 +70,36 @@ wpi.pullUpDnControl(col3Pin, wpi.PUD_UP);
 wpi.pinMode(hangupPin, wpi.INPUT);
 wpi.pullUpDnControl(hangupPin, wpi.PUD_UP);
 
+
+/********************************************************
+*********************  HANGUP CATCHER *******************
+********************************************************/
+wpi.wiringPiISR(hangupPin, wpi.INT_EDGE_BOTH, function(delta) {
+        var readval = wpi.digitalRead(hangupPin);
+        if (readval == 1) {
+            console.log("phone hung up");
+            eventEmitter.emit("hangup");
+        } else {
+            console.log("phone picked up");
+            eventEmitter.emit("pickup")
+        }
+
+});
+
+
+
+
+/********************************************************
+*********************  KEYPAD CATCHER *******************
+********************************************************/
+
 function resetPinGrid() {
        	pinGrid = [ [[false, false, 0], [false,false, 0], [false,false, 0]]
        			  , [[false, false, 0], [false,false, 0], [false,false, 0]]
        			  , [[false, false, 0], [false,false, 0], [false,false, 0]]
        			  , [[false, false, 0], [false,false, 0], [false,false, 0]]];
-       	console.log("---------------------------");
-}
 
+}
 
 function checkForPress() {
        	var pressLocation = [];
@@ -86,25 +112,24 @@ function checkForPress() {
        	}
 
        	if (pressLocation.length > 0) {
-       		console.log(pressLocation);
+       	//	console.log(pressLocation);
+                  var numPress = numPad[pressLocation[0]][pressLocation[1]];
        		console.log("The number "+numPad[pressLocation[0]][pressLocation[1]]+" has been pressed!");
        		resetPinGrid();
+
+                  eventEmitter.emit("numPress", String(numPress));
        	} else {
        	}
 }
 
-
-
-
-
 wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_RISING, function(delta) {
        	if( wpi.digitalRead(row1Pin)){
        		var now = Number(Date.now());
-       		console.log("row 1: " + String(now - pinGrid[0][0][2])+", "+(now - pinGrid[0][1][2])+", "+(now - pinGrid[0][2][2]));
-       		console.log(" ")
+       		//console.log("row 1: " + String(now - pinGrid[0][0][2])+", "+(now - pinGrid[0][1][2])+", "+(now - pinGrid[0][2][2]));
+       		//console.log(" ")
 
        		if (   now - row1Last > timeThreshhold) {
-       			console.log("REAL PRESS!");
+       			//console.log("REAL PRESS!");
 
        	       	pinGrid[0][0][0] = true;
        	       	pinGrid[0][1][0] = true;
@@ -117,12 +142,12 @@ wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_RISING, function(delta) {
 });
 wpi.wiringPiISR(row2Pin, wpi.INT_EDGE_RISING, function(delta) {
        		if (wpi.digitalRead(row2Pin)){
-       			console.log("row 2: "  );
-       			console.log(" ")
+       			//console.log("row 2: "  );
+       			//console.log(" ")
 
        			var now = Date.now();
        			if (   now - row2Last > timeThreshhold) {
-       			console.log("REAL PRESS!");
+       			//console.log("REAL PRESS!");
        		       	pinGrid[1][0][0] = true;
        		       	pinGrid[1][1][0] = true;
        		       	pinGrid[1][2][0] = true;
@@ -134,12 +159,12 @@ wpi.wiringPiISR(row2Pin, wpi.INT_EDGE_RISING, function(delta) {
 });
 wpi.wiringPiISR(row3Pin, wpi.INT_EDGE_RISING, function(delta) {
        		if (wpi.digitalRead(row3Pin)){
-       			console.log("row 3: "  );
-       			console.log(" ")
+       			//console.log("row 3: "  );
+       			//console.log(" ")
 
        			var now = Date.now();
        			if (   now - row3Last > timeThreshhold) {
-       			console.log("REAL PRESS!");
+       			//console.log("REAL PRESS!");
        		       	pinGrid[2][0][0] = true;
        		       	pinGrid[2][1][0] = true;
        		       	pinGrid[2][2][0] = true;
@@ -151,12 +176,12 @@ wpi.wiringPiISR(row3Pin, wpi.INT_EDGE_RISING, function(delta) {
 });
 wpi.wiringPiISR(row4Pin, wpi.INT_EDGE_RISING, function(delta) {
        		if (wpi.digitalRead(row4Pin)){
-       			console.log("row 4: "  );
-       			console.log(" ")
+       			//console.log("row 4: "  );
+       			//console.log(" ")
 
        			var now = Date.now();
        			if (   now - row4Last > timeThreshhold) {
-       			console.log("REAL PRESS!");
+       			//console.log("REAL PRESS!");
        		       	pinGrid[3][0][0] = true;
        		       	pinGrid[3][1][0] = true;
        		       	pinGrid[3][2][0] = true;
@@ -168,14 +193,13 @@ wpi.wiringPiISR(row4Pin, wpi.INT_EDGE_RISING, function(delta) {
 });
 
 
-
 wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_RISING, function(delta) {
        	if (wpi.digitalRead(col1Pin) && delta > deltaVal){
        		var now = Date.now();
-       		console.log("col 1 : "+ String(now - pinGrid[0][0][2]) + ", "+ (now - pinGrid[1][0][2]) +" , "+(now - pinGrid[2][0][2]) +", "+(now - pinGrid[3][0][2]) );
-       		console.log(" ")
+       		//console.log("col 1 : "+ String(now - pinGrid[0][0][2]) + ", "+ (now - pinGrid[1][0][2]) +" , "+(now - pinGrid[2][0][2]) +", "+(now - pinGrid[3][0][2]) );
+       		//console.log(" ")
        		if (   now - col1Last > timeThreshhold) {
-       			console.log("REAL PRESS!");
+       			//console.log("REAL PRESS!");
        	       	pinGrid[0][0][1] = true;
        	       	pinGrid[1][0][1] = true;
        	       	pinGrid[2][0][1] = true;
@@ -189,12 +213,12 @@ wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_RISING, function(delta) {
 wpi.wiringPiISR(col2Pin, wpi.INT_EDGE_RISING, function(delta) {
        	if ( wpi.digitalRead(col2Pin) ){
        		var now = Date.now();
-       		console.log("col 2 - "+now-col2Last);
+       		//console.log("col 2 - "+now-col2Last);
        	//     	console.log("col 2: " + String(now - pinGrid[0][1][2])  +", "+ (now - pinGrid[1][1][2])  +", "+ (now - pinGrid[2][1][2])  + ", "+ (now - pinGrid[3][1][2]) );
-       		console.log(" ")
+       		//console.log(" ")
 
        		if (   now - col2Last > timeThreshhold) {
-       			console.log("REAL PRESS!");
+       			//console.log("REAL PRESS!");
 
        	       		pinGrid[0][1][1] = true;
        	       	pinGrid[1][1][1] = true;
@@ -206,14 +230,13 @@ wpi.wiringPiISR(col2Pin, wpi.INT_EDGE_RISING, function(delta) {
        	}
 
 });
-
 wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
        	if (wpi.digitalRead(col3Pin)) {
-       		console.log("col 3: "+now-col3Last);
+       		//console.log("col 3: "+now-col3Last);
 
        		var now = Date.now();
        		if (   now - col3Last > timeThreshhold) {
-       			console.log("REAL PRESS!");
+       			//console.log("REAL PRESS!");
        	       	pinGrid[0][2][1] = true;
        	       	pinGrid[1][2][1] = true;
        	       	pinGrid[2][2][1] = true;
@@ -224,4 +247,177 @@ wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
 
        	}
 
+});
+
+
+
+
+
+/********************************************************
+*********************  MENU SYSTEM  *********************
+********************************************************/
+// any non-accounted for assumptions automatically kick you back to init
+var menuSystem = {
+      "init": {
+            "file": "menusystem/mainmenu.wav",
+            "options": {
+                  "1": "1_trees",
+                  "2": "advice",
+                  "3": "story",
+                  "4": "fact",
+                  "5": "lie",
+                  "6": "6_hauntedhouse",
+                  "7": "7_ewoks",
+                  "8": "8_beachhouse",
+                  "9": "9_aboutmbpih"
+            }
+      },
+      "1_trees": {
+            "file": "menusystem/1_trees_menu.wav",
+            "options": {
+                  "1": "1_1_tree_elm",
+                  "2": "1_2_tree_juniper",
+                  "3": "1_3_tree_weepingwillow",
+                  "4": "1_4_tree_beech",
+                  "5": "1_5_tree_waftingtrident",
+                  "6": "1_6_tree_sugarmaple",
+                  "7": "1_7_tree_birch",
+            }
+      },
+            "1_1_tree_elm": {
+                  "file": "menusystem/1_1_tree_elm.wav",
+                  "options":{
+                        "parent": "1_trees"
+                  }
+            },
+            "1_2_tree_juniper": {
+                  "file": "menusystem/1_2_tree_juniper.wav",
+                  "options":{
+                        "parent": "1_trees"
+                  }
+            },
+            "1_3_tree_weepingwillow": {
+                  "file": "menusystem/1_3_tree_weepingwillow.wav",
+                  "options":{
+                        "parent": "1_trees"
+                  }
+            },
+            "1_4_tree_beech": {
+                  "file": "menusystem/1_4_tree_beech.wav",
+                  "options":{
+                        "parent": "1_trees",
+                        "1": "1_4_1_beechnuts_deep",
+                        "9": "1_trees"
+                  }
+            },
+                  "1_4_1_beechnuts_deep": {
+                        "file": "menusystem/1_4_1_beechnuts_deep.wav",
+                        "options":{
+                              "parent": "1_trees"
+                        }
+                  },
+
+            "1_5_tree_waftingtrident": {
+                  "file": "menusystem/1_5_tree_waftingtrident.wav",
+                  "options":{
+                        "parent": "1_trees"
+                  }
+            },
+            "1_6_tree_sugarmaple": {
+                  "file": "menusystem/1_6_tree_sugarmaple.wav",
+                  "options":{
+                        "parent": "1_trees"
+                  }
+            },
+            "1_7_tree_birch": {
+                  "file": "menusystem/1_7_tree_birch.wav",
+                  "options":{
+                        "parent": "1_trees",
+                        "1": "1_7_1_birchwind",
+                        "9": "1_trees"
+                  }
+            },
+                   "1_7_1_birchwind": {
+                        "file": "menusystem/1_7_1_birchwind.wav",
+                        "options":{
+                              "parent": "1_trees"
+                        }
+                  },
+
+
+
+      "6_hauntedhouse": {
+            "file": ["menusystem/6_hauntedhouse.wav", "menusystem/6_hauntedhouse_b.wav"],
+            "options": {}
+      },
+      "7_ewoks": {
+            "file": "menusystem/7_ewoks.wav",
+            "options": {}
+      },
+      "8_beachhouse": {
+            "file": "menusystem/8_housesounds.wav",
+            "options": {}
+      },
+      "9_aboutmbpih": {
+            "file": "menusystems/9_aboutmbpih.wav",
+            "options": {}
+      }
+};
+var currMenuItem;
+var currSound = null;
+var buttonTone = null;
+var buttonToneFiles
+
+// not working because it fires whether the sound completes naturally or i hit 'stop' on it...
+///b le r r g g g
+// currSound.on("complete", function(){
+//       console.log("done playing!");
+//       console.log(e);
+//      //done playing!  go back to your parent, if that exists...
+//       if ('parent' in menuSystem[currMenuItem]['options']) {
+//             playMenuItem(menuSystem[currMenuItem]['options']['parent']);
+//       } else {
+//             // if nothing is specified, back to the top
+//             playMenuItem("init");
+//       }
+// });
+
+function playMenuItem(menuItem){
+      if (currSound != null) {
+            currSound.stop();
+      } 
+      var currSoundFile = menuSystem[menuItem]['file'];
+      console.log("play menu item: "+currSoundFile)
+      currSound = null;
+      currSound = new Sound(currSoundFile);
+      currMenuItem = menuItem;
+      currSound.play();
+}
+
+eventEmitter.on("numPress", function(num){
+      // * and # always kick you back up to the very top
+      if (num == "-1" || num == "-2") {
+            playMenuItem("init");
+      // otherwise see if there's some special option for you
+      } else if(num in menuSystem[currMenuItem]['options']) {
+            console.log("asdf "+menuSystem[currMenuItem]['options'][num])
+            playMenuItem(menuSystem[currMenuItem]['options'][num]);
+      }
+      // implied fallthrough - nothign happens if you press a key not associated with anything
+})
+
+
+eventEmitter.on("pickup", function(){
+      //start playing menu from the top
+      console.log("caught pickup");
+      playMenuItem("init");
+});
+
+
+eventEmitter.on("hangup", function(){
+      // kill playing menu
+      console.log("ccaught hangup");
+      if (currSound != null) {
+            currSound.stop();
+      }
 });

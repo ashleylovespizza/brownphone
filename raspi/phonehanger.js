@@ -30,7 +30,7 @@ console.log("started, playing "+test);
 //test.play();
 //
 //// GPIO pin of the button
-var configPin = 7;
+var configPin = 8;
 
 wpi.setup('wpi');
 
