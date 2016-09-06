@@ -1,0 +1,126 @@
+
+
+:: music fades in ::
+* - 
+Hello.  You've reached the Matt Brown Personal Inspiration Hotline.
+If you are not Matt Brown, please hang up... now.
+:: beat ::
+If you would like to hear a useful list of trees, please press 1
+To hear some advice from one of your old IDEO pals, press 2
+To hear a story, press 3
+To hear a fact, press 4
+To hear a lie, press 5
+
+[
+alternate options here - 
+
+To hear sounds of a haunted house, press 6
+To hear ewoks, press 7
+If you would like to hear the sounds of a beach house on a Sunday afternoon in September, press 8
+
+]
+
+To learn more about the MBPIH, press 9
+To hear this menu again, press *.
+
+
+1 - 
+** tree rustling sound**
+- And now - a useful list of trees.
+at any moment, you may go back to the main menu by pressing *
+The American Elm - press 1
+The Juniper Tree - press 2
+The Weeping Willow - press 3
+The Beech - press 4
+the Wafting Trident - press 5
+The Sugar Maple - press 6
+the Birch - press 7
+
+submenu - 1
+back to tree list - 9
+back to main menu - *
+
+American Elm -
+Elm trees are stately deciduous trees found in the eastern 2/3 of North America. They are the state tree for both MA and ND. Massachusetts chose American Elm as it was the tree species Georgia Washington stood beneath when he assumed command of the Continental Army in 1775. 
+American Elm trees are rapidy growing, and may grow to be 50 feet tall in only 20 years. At full maturity, they can reach up to 150 feet.
+simple, broad flat leaves, without unbalaned lobes, glossy and double-toothed.
+
+
+Juniper Tree -
+Common juniper, also known as (Juniperus communis), is an evergreen conifer which is native Britain, Europe and large parts of the northern hemisphere. It is usually a low growing shrub. The brown bark turns grey and peels with age. The needle-like leaves are green with silver edging. If you crush the leaves they will smell of lemon or apple.  Juniper provide important cover to nesting birds. Its berries are used to flavor gin. They are indominatable plants, typically living between 350 and 700 years before going to tree heaven.
+
+
+Weeping Willow - 
+Salix babylonica, or the weeping willow, is a graceful giant known for its gently dropping tendril-like branches and long, slender leaves. It is a fast-growing tree that grows especially well near water but has some drought tolerance. The Weeping willow was indiginous to China and cuttings made their way westward in early trade routes.  Artists' sketching coal is often made from processed willow bark, and the tree is often included in paintings from the Victorian era to symbolize death.
+
+To hear Desdemona's "Willow Song" from Othello, press 9
+https://www.youtube.com/watch?v=1gKbHLHb6f4
+
+
+Beech -
+Beech trees are conical, spreading trees, with a canopy of up to 40' in diameter. Notable for their smooth, grey bark, its branches are rated at medium strength.  They have dark, glossy green leaves, 3-6" long with sawtoothed edges. Beech trees produce both male and female flowers on the same tree, with pale, brown, unshowy blooms.  They create beechnuts, which are delicious and attract a variety of wildlife, making the beech tree a rich stage for the folleys and foibles of forest life.
+To learn more about harvesting beechnuts, press 1. To go back to the useful list of trees, press 9. To go to the main menu, press *.
+
+9 - 
+The best way to harvest beechnuts is to pick them off the trees before they start to fall naturally. However, if the nuts have reached maturity and have fallen into the humus and dried leaves of the forest floor, a blanket or tarp, and a little effort will net plenty.
+
+Although it is easier to extract the tiny kernels before the nuts lose all of their moisture, the meats of well-dried nuts are more crisp (and perhaps more tasty). Roasting the nuts in an oven or on the top of a wood-burning stove also produces good results. 
+        
+[ kicks you back up to main tree menu ]
+
+
+
+Wafting Trident -
+The wafting trident is a small, hardy tree prevalent in hot, dry climes. The tiny light green leaves dot the entirety of its wide, gnarled, and almost entirely hollow trunk. The characteristic three primary branches of the trident begin development in the tree's third year and continue their slow growth of 2 cm per year for the entire lifespan of the Wafting Trident, which we now understand can last over 2000 years. The Trident does not provide shade as its foliage never leaves the bud stage, but rather has adapted to waft and totter in the breeze, increasing its airflow and exposure to sun. The Trident's buds are poisonous until they have reached full maturity and are shed to the ground, making a great feast for desert rodents and omnivorous reptiles.
+
+
+Sugar Maple -
+The Sugar Maple tree is one of America's most well-loved trees - servings as the state tree to four different states in the USA. Wow! it develops a dense crown of leaves, with a spread of 50' and a height of 75' at maturity. It should not be planted in confined spaces where salt is a problem. In the 2001 baseball season, Barry Bonds switched from the traditional ash wood baseball bat to one made of maple and hit 73 home runs—a new record!
+
+
+
+Birch - Birch trees - genus Betula, Family Betulacae, in the Order Fagales, making these trees close cousins with Oak and Beech trees. A thin-leaved, deciduous hardwood tree, they are prized for their outstanding white, peeling bark and graceful foliage. They are sensitive trees. Their shallow root system thrives in cool, moist soil, making them susceptible to even brief droughts - yet their leaves require full, bright sun. 
+Birch sap, also known as birch blood, had a folk reputation for breaking kidney or bladder stone and treating skin conditions and rheumatic diseases. It can be drunk in spring as a refreshing and cleansing tonic, clearing the sluggishness of winter from the system.  Birch leaves and bark can be boiled down to extract oil and tar. Quite a useful tree!
+
+To hear the wind whipping through a birch tree, press 1.
+https://archive.org/details/WINDRIBBONING
+
+
+
+
+
+2 - play random encouragement /advice clip
+
+
+3 - play a story (hopefully get some from people... TODO find 3-5 v.short stories to record)
+
+
+4 - facts (just play a random fact file, then spit back up to main menu)
+The strawberry is not a berry, but the banana is.
+Ancient Egyptians slept on pillows made of stone. 
+A mole can dig a tunnel 300 feet long in just one night. 
+In space, astronauts cannot cry, because there is no gravity, so the tears can't flow. 
+Proportional to their weight, men are stronger than horses.
+Your heart is about the same size as your fist.
+Sharks have 8 unique senses - the same 5 as humans, plus three extras: lateral line (or water pressure), Lorenzini (or electro perception), and pit organs, whose function has not yet been understood.
+
+
+
+5 - (lies- same as truths)
+-Every human being has a familiar animal with whom they share over 99% of their DNA. The animal is revealed to them in small ways throughout their lives, usually in the evening hours.
+-Hot air balloons are actually originally ways for creature to travel between heaven and earth.
+-Waves are not only effected by the lunar phase, but also by the inner tides created by the undersea interstate of crustaceans.
+-Wondering why the sky is blue? It's because earth's thermosphere is full of blueberry jam. Sky jam!
+-McDonald's Happy Meals are the result of an extensive, decades-long focus group. Earlier iterations included the Melancholy Meal, the Ecstatic Meal, and the Ennui Meal.
+-Think water has only three states? Think again!  If it gets hot enough, gaseous water, known as "steam", will turn into pure energy, only visible through a prism.
+-Your skull is made up of over 4000 different bones.
+
+
+
+6 - plymouth sound file
+
+
+7-
+The Matt Brown Personal Inspiration Hotline has been available in your heart always, but now, for your convenience, can also be tapped into via this telephone. Not any other telephone: only this one.
+The Matt Brown Personal Inspiration Hotline exists only for you. It may sound garbled, silent, or like a faint dialect of middle english to those who are not Matt Brown.
+Press * to go back to the main menu.
