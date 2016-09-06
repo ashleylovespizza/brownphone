@@ -4,8 +4,12 @@ var events = require('events');
 var eventEmitter = new events.EventEmitter();
 
 
+
+/********************************************************
+*********************  PIN CONFIG FOR KEYPAD HOOKUP *******************
+********************************************************/
 //// GPIO pin of the button
-// check gpio readall in the cli to check for the wPI numbers
+// check `gpio readall`  in the cli to check for the wPI numbers
 var row1Pin = 6
   , row2Pin = 10
   , row3Pin = 28
@@ -32,6 +36,8 @@ var row1Last=0
   , col1Last=0
   , col2Last=0
   , col3Last=0;
+
+// mapping for the number you're actually pressing to its row/col location
 // -1 = *
 // -2 = #
 var numPad =  [ [1, 2, 3]
@@ -45,7 +51,7 @@ var timeThreshhold = 70;
 
 
 wpi.setup('wpi');
-
+// pin setup stuff...
 wpi.pinMode(row1Pin, wpi.INPUT);
 wpi.pullUpDnControl(row1Pin, wpi.PUD_UP);
 
@@ -254,8 +260,11 @@ wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
 
 
 /********************************************************
-*********************  MENU SYSTEM  *********************
+*********************  MENU SYSTEM FSM  *********************
 ********************************************************/
+
+// to add new options, alter the menuSystem JSON object and make sure the sound files end up in the appropriate place
+
 // any non-accounted for assumptions automatically kick you back to init
 var menuSystem = {
       "init": {

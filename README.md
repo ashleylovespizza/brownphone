@@ -2,6 +2,8 @@
 
 ## Things To Know...
 
+- All the good stuff is in raspi/touchtone.js
+
 - to SSH into the raspberry pi, find its IP address. username is pi, password is raspberry
 - To run things on the pi:
 ```
