@@ -269,7 +269,7 @@ var menuSystem = {
                   "6": "6_hauntedhouse",
                   "7": "7_ewoks",
                   "8": "8_beachhouse",
-                  "9": "9_aboutmbpih"
+                  "9": "9_about"
             }
       },
       "1_trees": {
@@ -282,6 +282,7 @@ var menuSystem = {
                   "5": "1_5_tree_waftingtrident",
                   "6": "1_6_tree_sugarmaple",
                   "7": "1_7_tree_birch",
+                  "-2": "1_trees"
             }
       },
             "1_1_tree_elm": {
@@ -358,9 +359,12 @@ var menuSystem = {
             "file": "menusystem/8_housesounds.wav",
             "options": {}
       },
-      "9_aboutmbpih": {
-            "file": "menusystems/9_aboutmbpih.wav",
+      "9_about": {
+            "file": "menusystem/9_about.wav",
             "options": {}
+      },
+      "test": {
+
       }
 };
 var currMenuItem;
@@ -387,7 +391,16 @@ function playMenuItem(menuItem){
             currSound.stop();
       } 
       var currSoundFile = menuSystem[menuItem]['file'];
-      console.log("play menu item: "+currSoundFile)
+
+      // for many random files
+      if (typeof currSoundFile != 'string') {
+            var len = currSoundFile.length;
+            currSoundFile = menuSystem[menuItem]['file'][Math.floor(Math.random() * len)];
+      }
+      console.log("play menu item: "+currSoundFile);
+      console.log("currSound: ");
+      console.log(currSound);
+      
       currSound = null;
       currSound = new Sound(currSoundFile);
       currMenuItem = menuItem;
@@ -395,13 +408,13 @@ function playMenuItem(menuItem){
 }
 
 eventEmitter.on("numPress", function(num){
-      // * and # always kick you back up to the very top
-      if (num == "-1" || num == "-2") {
-            playMenuItem("init");
-      // otherwise see if there's some special option for you
-      } else if(num in menuSystem[currMenuItem]['options']) {
-            console.log("asdf "+menuSystem[currMenuItem]['options'][num])
+       if(num in menuSystem[currMenuItem]['options']) {
+      //  see if there's some special option for you
+            console.log("tryin to play this index: "+menuSystem[currMenuItem]['options'][num])
             playMenuItem(menuSystem[currMenuItem]['options'][num]);
+      } else if (num == "-1" || num == "-2") {
+      // * always kicks you back up to the very top
+            playMenuItem("init");
       }
       // implied fallthrough - nothign happens if you press a key not associated with anything
 })
