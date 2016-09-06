@@ -6,7 +6,7 @@ use Socialite;
 use Auth;
 use App\User;
 use Hash;
-
+use Redirect;
 
 class AuthController extends Controller
 {
@@ -20,6 +20,11 @@ class AuthController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return env('APP_ENV') == 'local' ? Redirect::to('/') : Redirect::secure('/');
+    }
     /**
      * Obtain the user information from GitHub.
      *
@@ -41,7 +46,7 @@ class AuthController extends Controller
         }
     	
     	Auth::login($existing_user, true);
-    	return redirect('/')->with(['user'=>$existing_user]);
+    	return env('APP_ENV') == 'local' ? Redirect::to('/')->with(['user'=>$existing_user]) : Redirect::secure('/')->with(['user'=>$existing_user]);
         // $user->token;
     }
 }

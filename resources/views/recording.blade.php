@@ -23,10 +23,16 @@
 		.main {
 			margin-top: 50px;
 		}
+		.logout {
+			position: absolute;
+			right: 30px;
+			top: 20px;
+		}
 	</style>
 </head>
 <body>
 <div class="container main">
+	<a class="logout" href="/logout">Logout</a>
 	<div class="row">
 		<div class="col-md-12">
 			<form class="form-horizontal" method="POST">
