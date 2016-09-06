@@ -1,0 +1,42 @@
+{
+    "name": "The Brown Phone",
+    "description": "",
+    "repository": "",
+    "logo": "",
+    "addons": ["heroku-postgresql:hobby-dev"],
+    "env": {
+    "APP_DEBUG": "true",
+    "APP_ENV": "production",
+    "DB_CONNECTION": "pgsql",
+    "S3_KEY": {
+      "description": "Amazon S3 Key",
+      "value": ""
+    },
+    "S3_SECRET": {
+      "description": "Amazon S3 Secret",
+      "value": ""
+    },
+    "S3_REGION": {
+      "description": "Amazon S3 Region",
+      "value": "us-west-2"
+    },
+    "S3_BUCKET": {
+      "description": "Amazon S3 Bucket Name",
+      "value": ""
+    },
+    "APP_KEY": {
+        "description": "Random 32 character string. Heroku does not have a generator for 32 character string ie: 22gauqhozv6fs6d3qpjy9bztf5qgjkir",
+        "value": ""
+    },
+    "buildpacks": [
+        {
+            "url": "heroku/php"
+        },
+        {
+            "url": "heroku/nodejs"
+        }
+    ],
+    "engines": {
+        "node": "5.10.1"
+    }
+}

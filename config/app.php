@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'My Application',
+    'name' => 'Brown Phone',
 
     /*
     |--------------------------------------------------------------------------
@@ -166,6 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
         //
 
@@ -224,6 +225,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

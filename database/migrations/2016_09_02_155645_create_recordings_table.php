@@ -16,8 +16,7 @@ class CreateRecordingsTable extends Migration
         Schema::create('recordings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('audio_file');
-            $table->string('name')->nullable()->default(NULL);
-            $table->string('email')->nullable()->default(NULL);
+            $table->string('user_id')->nullable()->default(NULL);
             $table->timestamps();
         });
     }

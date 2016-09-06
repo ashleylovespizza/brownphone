@@ -8,7 +8,6 @@ class Recording extends Model
 {
    protected $fillable = [
                 'audio_file',
-                'name',
-                'email'
+                'user_id'
                 ];
 }
