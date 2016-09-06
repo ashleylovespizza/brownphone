@@ -262,10 +262,10 @@ var menuSystem = {
             "file": "menusystem/mainmenu.wav",
             "options": {
                   "1": "1_trees",
-                  "2": "advice",
-                  "3": "story",
-                  "4": "fact",
-                  "5": "lie",
+                  "2": "TODOadvice",
+                  "3": "3_story",
+                  "4": "4_fact",
+                  "5": "5_lie",
                   "6": "6_hauntedhouse",
                   "7": "7_ewoks",
                   "8": "8_beachhouse",
@@ -345,7 +345,18 @@ var menuSystem = {
                         }
                   },
 
-
+      "3_story": {
+      	"file": "menusystem/3_story.wav",
+      	'options': {}
+      },
+      "4_fact": {
+      	"file": ["menusystem/4_fact_1.wav","menusystem/4_fact_2.wav","menusystem/4_fact_3.wav","menusystem/4_fact_4.wav","menusystem/4_fact_5.wav","menusystem/4_fact_6.wav","menusystem/4_fact_7.wav"],
+      	'options': {}
+      },
+      "5_lie": {
+      	"file": ["menusystem/5_lie_1.wav","menusystem/5_lie_2.wav","menusystem/5_lie_3.wav","menusystem/5_lie_4.wav","menusystem/5_lie_5.wav"],
+      	'options': {}
+      },
 
       "6_hauntedhouse": {
             "file": ["menusystem/6_hauntedhouse.wav", "menusystem/6_hauntedhouse_b.wav"],

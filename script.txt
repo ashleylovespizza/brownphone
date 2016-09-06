@@ -13,13 +13,14 @@ To hear a lie, press 5
 
 [
 alternate options here - 
-If you would like to hear the sounds of a beach house on a Sunday afternoon in September, press 6
-To hear ewoks, press 6
+
 To hear sounds of a haunted house, press 6
+To hear ewoks, press 7
+If you would like to hear the sounds of a beach house on a Sunday afternoon in September, press 8
 
 ]
 
-To learn more about the MBPIH, press 7
+To learn more about the MBPIH, press 9
 To hear this menu again, press *.
 
 
@@ -34,6 +35,10 @@ The Beech - press 4
 the Wafting Trident - press 5
 The Sugar Maple - press 6
 the Birch - press 7
+
+submenu - 1
+back to tree list - 9
+back to main menu - *
 
 American Elm -
 Elm trees are stately deciduous trees found in the eastern 2/3 of North America. They are the state tree for both MA and ND. Massachusetts chose American Elm as it was the tree species Georgia Washington stood beneath when he assumed command of the Continental Army in 1775. 
@@ -53,7 +58,7 @@ https://www.youtube.com/watch?v=1gKbHLHb6f4
 
 
 Beech -
-Beech trees are conical, spreading trees, with a canopy of up to 40' in diameter. Notable for their smooth, grey bark, and its branches are rated at medium strength.  They have dark, glossy green leaves, 3-6" long with sawtoothed edges. They produce both male and female flowers on the same tree, with pale, brown, unshowy blooms.  They produce beechnuts, which are delicious and attract a variety of wildlife, making the beech tree a rife stage for the folleys and foibles of forest life.
+Beech trees are conical, spreading trees, with a canopy of up to 40' in diameter. Notable for their smooth, grey bark, its branches are rated at medium strength.  They have dark, glossy green leaves, 3-6" long with sawtoothed edges. Beech trees produce both male and female flowers on the same tree, with pale, brown, unshowy blooms.  They create beechnuts, which are delicious and attract a variety of wildlife, making the beech tree a rich stage for the folleys and foibles of forest life.
 To learn more about harvesting beechnuts, press 1. To go back to the useful list of trees, press 9. To go to the main menu, press *.
 
 9 - 
