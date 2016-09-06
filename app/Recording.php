@@ -10,4 +10,9 @@ class Recording extends Model
                 'audio_file',
                 'user_id'
                 ];
+
+    public function user()
+    {
+    	return $this->belongsTo('App\User');
+    }
 }

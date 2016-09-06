@@ -18,6 +18,10 @@ class RecordingsController extends Controller
     	return true;
     }
 
+    public function feed()
+    {
+        return Recording::with('user')->get();
+    }
     public function post(Request $request)
     {
     	$rules = ['audio_file' => 'required'];
