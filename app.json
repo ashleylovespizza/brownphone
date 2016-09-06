@@ -1,8 +1,8 @@
 {
     "name": "TheBrownPhone",
-    "description": "",
-    "repository": "",
-    "logo": "",
+    "description": "A phone for Mr. Brown",
+    "repository": "https://github.com/ashleylovespizza/brownphone",
+    "logo": "https://www.dropbox.com/s/nnu4vc495ykxnm9/brownphone.png?dl=1",
     "addons": ["heroku-postgresql:hobby-dev"],
     "env": {
         "APP_DEBUG": "true",
