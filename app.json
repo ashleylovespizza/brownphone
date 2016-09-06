@@ -27,7 +27,20 @@
         "APP_KEY": {
             "description": "Random 32 character string. Heroku does not have a generator for 32 character string ie: 22gauqhozv6fs6d3qpjy9bztf5qgjkir",
             "value": ""
+        },
+        "GOOGLE_CLIENT_ID": {
+            "description": "Google Auth Client ID",
+            "value": ""
+        },
+        "GOOGLE_CLIENT_SECRET": {
+            "description": "Google Auth Secret",
+            "value": ""
+        },
+        "GOOGLE_REDIRECT": {
+            "description": "Google Auth redirect",
+            "value": "http://localhost:8000/oauth2callback"
         }
+
     },
     "buildpacks": [
         {
