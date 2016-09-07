@@ -18,19 +18,44 @@ class RecordingsController extends Controller
     	return true;
     }
 
+    public function index()
+    {
+        return view('recording');
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $recording = Recording::find($id);
+        if(!$recording) {
+            return $this->resourceNotFound();
+        }
+        $recording->delete();
+        return $this->resourceDeleted($recording);
+    }
+
     public function feed()
     {
         return Recording::with('user')->get();
     }
     public function post(Request $request)
     {
-    	$rules = ['audio_file' => 'required'];
-    	$this->validate($request, $rules);
-
-        $file = $request->file('audio_file');
-        $filename = uniqid().'.wav';
-    	Storage::put($filename, file_get_contents($file->getRealPath()), 'public');
-		$file_url = Storage::url($filename);
+        
+        // fix this later
+    	// $rules = ['audio_file' => 'required'];
+    	// $this->validate($request, $rules);
+        $file_url = "";
+        if($request->file('audio_upload')) {
+            $file = $request->file('audio_upload');
+            $filename = uniqid().'.'.$file->extension();
+            Storage::put($filename, file_get_contents($file->getRealPath()), 'public');
+            $file_url = Storage::url($filename);
+        }
+        else {
+            $file = $request->file('audio_file');
+            $filename = uniqid().'.wav';
+        	Storage::put($filename, file_get_contents($file->getRealPath()), 'public');
+    		$file_url = Storage::url($filename);
+        }
 
     	$recording = Recording::create([
     		'user_id' => Auth::user()->id,

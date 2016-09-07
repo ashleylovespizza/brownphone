@@ -14,24 +14,51 @@ $(document).ready(function($) {
     var currAudioBlob = null;
     var $form = $("form");
     var $submitButton = $("#submit");
+    var token = $('meta[name="csrf_token"]').attr('content')
     $submitButton.hide();
 
+    $('#file-upload').change(function(event) {
+        $submitButton.show();
+    });
+    $('.delete-recording').click(function(event) {
+        event.preventDefault();
+        var id = $(this).data('id');
+        var data = {_method: 'DELETE', '_token': token};
+        var $el = $('.recording-'+id);
+        $.ajax({
+            url: '/recordings/'+id,
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+        })
+        .done(function(e) {
+            if(e.status > 200) {
+                $el.fadeTo(200, 0, function() {
+                 $(this).remove();   
+                });
+            }
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+        
+    });
     $form.submit(function( event ) {
         event.preventDefault();
         console.log("Post Recording");
-        if(!currAudioBlob) {
+        if(!currAudioBlob && $('#file-upload').val() == "") {
             console.log("Missing recording");
             return;            
         }
-        var data = new FormData();
-        var blob = new Blob([currAudioBlob], {type: "audio/wav"});
-        data.append('csrf_token', $('meta[name="csrf_token"]').attr('content'));
-        data.append('audio_name', moment().format('x')+"_audio.wav");
-        data.append('audio_file', blob);
-        $("form input").each(function() {
-            data.append(this.name, $(this).val());
-        });
-
+        var data = new FormData($('form')[0]);
+        if(currAudioBlob) {
+            var blob = new Blob([currAudioBlob], {type: "audio/wav"});
+            data.append('audio_name', moment().format('x')+"_audio.wav");
+            data.append('audio_file', blob);
+        }
         $.ajax({
             url: '/submit',
             type: 'POST',
@@ -130,7 +157,8 @@ $(document).ready(function($) {
             audio_elt.src = sound_url;
             audio_elt.setAttribute('data-question', $(".record").attr('data-question'));
 
-            $form.append( $(audio_elt) );
+
+            $('#recording-col').html( $(audio_elt) );
             $recordButton.html(currAudioBlob ? "Re-Record" : "Start Recording");
             if(currAudioBlob) {
                 $submitButton.show();

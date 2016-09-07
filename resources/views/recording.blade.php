@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="csrf_token" content="{{ csrf_token() }}">
 	<title>The Brown Phone</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -64,6 +65,24 @@
 			  		</div>
 				</div>
 
+				<!-- upload a recording --> 
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="singlebutton">Upload Recording</label>
+			  		<div class="col-md-4">
+					<input type="file" id="file-upload" name="audio_upload" accept="audio/*"></input>
+			  		</div>
+				</div>
+
+
+				<!-- recording --> 
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="singlebutton"></label>
+			  		<div class="col-md-4" id="recording-col">
+			  		</div>
+				</div>
+
+
+
 				<!-- Button -->
 				<div class="form-group">
 					<label class="col-md-4 control-label" for="singlebutton"></label>
@@ -81,12 +100,13 @@
 		<div class="col-md-12">
 			<ul class="list-group">
 				@foreach (Auth::user()->recordings as $recording)
-					<li class="list-group-item">
+					<li class="list-group-item recording-{{$recording->id}}">
 						<div class="pull-right">
 							<audio src="{{$recording->audio_file}}" controls></audio>
 						</div>	
 						
-						{{$recording->created_at->diffForHumans()}}
+						{{$recording->created_at->diffForHumans()}}<br>
+						<a data-id="{{$recording->id}}" class="link delete-recording" src="">Delete</a>
 
 					</li>
 				@endforeach
