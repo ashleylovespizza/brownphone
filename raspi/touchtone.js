@@ -49,6 +49,8 @@ var deltaVal = 1;
 var lastPressTime = 0;
 var timeThreshhold = 70;
 
+var pickedup = false;
+
 
 wpi.setup('wpi');
 // pin setup stuff...
@@ -83,11 +85,15 @@ wpi.pullUpDnControl(hangupPin, wpi.PUD_UP);
 wpi.wiringPiISR(hangupPin, wpi.INT_EDGE_BOTH, function(delta) {
         var readval = wpi.digitalRead(hangupPin);
         if (readval == 1) {
-            console.log("phone hung up");
-            eventEmitter.emit("hangup");
+            if (pickedup) {
+                  console.log("phone hung up");
+                  eventEmitter.emit("hangup");
+            }
         } else {
-            console.log("phone picked up");
-            eventEmitter.emit("pickup")
+            if (!pickedup) {
+                  console.log("phone picked up");
+                  eventEmitter.emit("pickup")
+            }
         }
 
 });
@@ -355,15 +361,15 @@ var menuSystem = {
                   },
 
       "3_story": {
-      	"file": "menusystem/3_story.wav",
+      	"file": ["menusystem/3_story.wav","menusystem/3_story_2.wav","menusystem/3_story_3.wav"],
       	'options': {}
       },
       "4_fact": {
-      	"file": ["menusystem/4_fact_1.wav","menusystem/4_fact_2.wav","menusystem/4_fact_3.wav","menusystem/4_fact_4.wav","menusystem/4_fact_5.wav","menusystem/4_fact_6.wav","menusystem/4_fact_7.wav"],
+      	"file": ["menusystem/4_fact_1.wav","menusystem/4_fact_2.wav","menusystem/4_fact_3.wav","menusystem/4_fact_4.wav","menusystem/4_fact_5.wav","menusystem/4_fact_6.wav","menusystem/4_fact_7.wav","menusystem/4_fact_8.wav"],
       	'options': {}
       },
       "5_lie": {
-      	"file": ["menusystem/5_lie_1.wav","menusystem/5_lie_2.wav","menusystem/5_lie_3.wav","menusystem/5_lie_4.wav","menusystem/5_lie_5.wav"],
+      	"file": ["menusystem/5_lie_1.wav","menusystem/5_lie_2.wav","menusystem/5_lie_3.wav","menusystem/5_lie_4.wav","menusystem/5_lie_5.wav","menusystem/5_lie_6.wav"],
       	'options': {}
       },
 
@@ -443,6 +449,8 @@ eventEmitter.on("numPress", function(num){
 eventEmitter.on("pickup", function(){
       //start playing menu from the top
       console.log("caught pickup");
+
+      pickedup = true;
       playMenuItem("init");
 });
 
@@ -450,6 +458,7 @@ eventEmitter.on("pickup", function(){
 eventEmitter.on("hangup", function(){
       // kill playing menu
       console.log("ccaught hangup");
+      pickedup = false;
       if (currSound != null) {
             currSound.stop();
       }

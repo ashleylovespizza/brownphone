@@ -21,7 +21,7 @@ downloadAll();
 
 function start(){
 
-	// rename old file to feed.json
+	// rename the last file to feed.json
 	fs.rename('feed/new_feed.json', 'feed/feed.json');
 	fs.readFile('feed/feed.json', 'utf8', function (err, data) {
 		if (err) throw err;
@@ -36,7 +36,7 @@ function pullNewFeed() {
 	// pull down new file
 	var localFeedFileName = "feed/new_feed.json"; //String(Date.now())+".json";
 	var localFeed = fs.createWriteStream(localFeedFileName);
-	var request = https.get('https://ff-understandings.herokuapp.com/feed', function(response){
+	var request = https.get('https://thebrownphone.herokuapp.com/feed', function(response){
 		response.pipe(localFeed);
 		localFeed.on('finish', function() {
 	      localFeed.close(parseNewFeed);  // close() is async, call cb after close completes.
