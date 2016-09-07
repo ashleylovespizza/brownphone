@@ -7,3 +7,115 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+$ecru: #e6ddcb;
+$brownred: #b82a1b;
+$purple: #845ccd;
+body {
+	background: $ecru;
+	font-family: 'Lora', serif;
+}
+.titlearea {
+	height: 180px;
+	margin-bottom: 80px;
+	background: url('/images/brownphone.png') no-repeat bottom center;
+	background-size:  300px auto;
+
+	-webkit-animation: color_change 4s infinite alternate;
+	-moz-animation: color_change 4s infinite alternate;
+	-ms-animation: color_change 4s infinite alternate;
+	-o-animation: color_change 4s infinite alternate;
+	animation: color_change 4s infinite alternate;
+	&:after {
+		width: 100%;
+		content: '';
+		display: block;
+		height: 80px;
+		background: url('/images/stripes_slice.png') repeat-x left top;
+		background-size: 27px 80px;
+		position: relative;
+		top: 180px;
+	}
+}
+.submit_container {
+	margin-top: 45px;
+	.col-xs-6, .col-xs-5 {
+		float: none;
+		display: inline-block;
+	}
+	button {
+		margin-top: 0;
+	}
+}
+#recording, #submit {
+	font-family: 'Catamaran', Arial, sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	color: white;
+	padding: 12px 24px;
+	background: $brownred;
+	&:hover {
+		background: $purple;
+	}
+	border: none;
+}
+#recording {
+	margin-top: 30px;
+		background: #674818;
+	&:hover {
+		background: #855d1f
+	}
+
+}
+#submit {
+	margin-top: -23px;
+}
+#audio_container {
+	margin-top: 22px;
+}
+.form-horizontal .control-label{
+	text-align: left;
+}
+h3 {
+	font-family: 'Catamaran', Arial, sans-serif;
+	margin-top: 52px;
+}
+
+a{
+
+	font-family: 'Catamaran', Arial, sans-serif;
+}
+
+
+.logout {
+
+	padding-top: 60px;
+	text-transform: uppercase;
+	float: right;
+	color: #674818;
+	&:hover, &:focus, &:active {
+		color: #855d1f;
+	}
+}
+
+
+@-webkit-keyframes color_change {
+  from { background-color: $purple; }
+  to { background-color: $brownred; }
+}
+@-moz-keyframes color_change {
+  from { background-color: $purple; }
+  to { background-color: $brownred; }
+}
+@-ms-keyframes color_change {
+  from { background-color: $purple; }
+  to { background-color: $brownred; }
+}
+@-o-keyframes color_change {
+  from { background-color: $purple; }
+  to { background-color: $brownred; }
+}
+@keyframes color_change {
+  from { background-color: $purple; }
+  to { background-color: $brownred; }
+}

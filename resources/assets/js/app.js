@@ -129,8 +129,8 @@ $(document).ready(function($) {
             audio_elt.controls = true;
             audio_elt.src = sound_url;
             audio_elt.setAttribute('data-question', $(".record").attr('data-question'));
-
-            $form.append( $(audio_elt) );
+            $("#audio_container").append( $(audio_elt) );
+           // $form.append( $(audio_elt) );
             $recordButton.html(currAudioBlob ? "Re-Record" : "Start Recording");
             if(currAudioBlob) {
                 $submitButton.show();

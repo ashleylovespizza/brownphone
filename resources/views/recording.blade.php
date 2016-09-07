@@ -7,6 +7,8 @@
 	<title>The Brown Phone</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Catamaran:800,900|Lora" rel="stylesheet">
+	<link rel="stylesheet" href="css/app.css">
 	<link rel="icon" type="image/png" href="favicon.png">
     	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,79 +22,91 @@
 	<script src="/js/vendor/recorder.js"></script>
 	<script src="/js/app.js"></script>
 	<style type="text/css">
-		.main {
-			margin-top: 50px;
-		}
-		.logout {
-			position: absolute;
-			right: 30px;
-			top: 20px;
-		}
+		
 	</style>
 </head>
 <body>
-<div class="container main">
-	<a class="logout" href="/logout">Logout</a>
-	<div class="row">
-		<div class="col-md-12">
-			<form class="form-horizontal" method="POST">
+<div class="main test">
 
-				<fieldset>
-				{{ csrf_field() }}
-				
-				<!-- Text input-->
-				<div class="form-group">
-				  <label class="col-md-4 control-label" for="name">Name</label>  
-				  <div class="col-md-4">
-				  <input id="name" name="name" type="text" value="{{Auth::user()->name}}" placeholder="Name" class="form-control input-md">
-				  </div>
-				</div>
-
-				<!-- Text input-->
-				<div class="form-group">
-				  <label class="col-md-4 control-label" for="email">Email</label>  
-				  <div class="col-md-4">
-				  <input id="email" name="email" value="{{Auth::user()->email}}" type="text" placeholder="Email" class="form-control input-md">
-				  </div>
-				</div>
-				
-				<!-- record Button --> 
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="singlebutton">Recording</label>
-			  		<div class="col-md-4">
-			    		<button id="recording" name="recording" class="btn btn-defualt">Start Recording</button>
-			  		</div>
-				</div>
-
-				<!-- Button -->
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="singlebutton"></label>
-			  		<div class="col-md-4">
-			    		<button id="submit" name="submit" class="btn btn-primary">Submit</button>
-			  		</div>
-				</div>
-
-				</fieldset>
-			</form>
-		</div>
+	<div class="titlearea">
+		<span class="hidden">the brown phone</span>
 	</div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<ul class="list-group">
-				@foreach (Auth::user()->recordings as $recording)
-					<li class="list-group-item">
-						<div class="pull-right">
-							<audio src="{{$recording->audio_file}}" controls></audio>
-						</div>	
-						
-						{{$recording->created_at->diffForHumans()}}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form-horizontal" method="POST">
 
-					</li>
-				@endforeach
-			</ul>
+					<fieldset>
+					{{ csrf_field() }}
+					
+					<!-- Text input-->
+					<div class="form-group col-sm-6">
+					  <label class="col-md-4 control-label" for="name">Name</label>  
+					  <div class="col-md-12">
+					  <input id="name" name="name" type="text" value="{{Auth::user()->name}}" placeholder="Name" class="form-control input-md">
+					  </div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group col-sm-6">
+					  <label class="col-md-4 control-label" for="email">Email</label>  
+					  <div class="col-md-12">
+					  <input id="email" name="email" value="{{Auth::user()->email}}" type="text" placeholder="Email" class="form-control input-md">
+					  </div>
+					</div>
+					<div class="col-md-12 text-center"
+						<p>Record a piece of advice or something inspiring for Matt Brown to hear.</p>
+					</div>
+					<!-- record Button --> 
+					<div class="form-group">
+				  		<div class="col-md-12 text-center">
+				    		<button id="recording" 
+				    		name="recording" 
+				    		class="btn btn-default">Start Recording</button>
+				  		</div>
+					</div>
+					<div class="submit_container">
+						<div class="col-xs-6">
+						<!-- Button -->
+
+							<div id="audio_container" class="text-right">
+							</div>
+						</div>
+
+					  	<div class="col-xs-5">
+					    	<button id="submit" name="submit" class="btn btn-primary">
+					    		Submit
+					    	</button>
+					  	</div>
+				 	</div>
+			
+
+					</fieldset>
+				</form>
+			</div>
 		</div>
-	</div>	
+
+		<div class="row">
+			<div class="col-md-12">
+			<h3>Your Brown Phone Advice:</h3>
+				<ul class="list-group">
+					@foreach (Auth::user()->recordings as $recording)
+						<li class="list-group-item">
+							<div class="pull-right text-center">
+								<audio src="{{$recording->audio_file}}" controls></audio>
+							</div>	
+							
+							{{$recording->created_at->diffForHumans()}}
+
+						</li>
+					@endforeach
+				</ul>
+			</div>
+		</div>	
+
+		<a class="logout" href="/logout">Logout</a>
+	</div>
 </div>
 
 </body>

@@ -5766,4 +5766,86 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+body {
+  background: #e6ddcb;
+  font-family: 'Lora', serif; }
+
+.titlearea {
+  height: 180px;
+  margin-bottom: 80px;
+  background: url("/images/brownphone.png") no-repeat bottom center;
+  background-size: 300px auto;
+  -webkit-animation: color_change 4s infinite alternate;
+  animation: color_change 4s infinite alternate; }
+  .titlearea:after {
+    width: 100%;
+    content: '';
+    display: block;
+    height: 80px;
+    background: url("/images/stripes_slice.png") repeat-x left top;
+    background-size: 27px 80px;
+    position: relative;
+    top: 180px; }
+
+.submit_container {
+  margin-top: 45px; }
+  .submit_container .col-xs-6, .submit_container .col-xs-5 {
+    float: none;
+    display: inline-block; }
+  .submit_container button {
+    margin-top: 0; }
+
+#recording, #submit {
+  font-family: 'Catamaran', Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: white;
+  padding: 12px 24px;
+  background: #b82a1b;
+  border: none; }
+  #recording:hover, #submit:hover {
+    background: #845ccd; }
+
+#recording {
+  margin-top: 30px;
+  background: #674818; }
+  #recording:hover {
+    background: #855d1f; }
+
+#submit {
+  margin-top: -23px; }
+
+#audio_container {
+  margin-top: 22px; }
+
+.form-horizontal .control-label {
+  text-align: left; }
+
+h3 {
+  font-family: 'Catamaran', Arial, sans-serif;
+  margin-top: 52px; }
+
+a {
+  font-family: 'Catamaran', Arial, sans-serif; }
+
+.logout {
+  padding-top: 60px;
+  text-transform: uppercase;
+  float: right;
+  color: #674818; }
+  .logout:hover, .logout:focus, .logout:active {
+    color: #855d1f; }
+
+@-webkit-keyframes color_change {
+  from {
+    background-color: #845ccd; }
+  to {
+    background-color: #b82a1b; } }
+
+@keyframes color_change {
+  from {
+    background-color: #845ccd; }
+  to {
+    background-color: #b82a1b; } }
+
 /*# sourceMappingURL=app.css.map */
