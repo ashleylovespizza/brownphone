@@ -19,6 +19,9 @@ start();
 
 //downloadAll();
 
+start();
+
+
 function start(){
 
 	// rename the last file to feed.json

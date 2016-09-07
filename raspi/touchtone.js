@@ -1,6 +1,7 @@
 var wpi = require('wiring-pi');
 var Sound = require('node-aplay');
 var events = require('events');
+var fs = require('fs');
 var eventEmitter = new events.EventEmitter();
 
 
@@ -270,6 +271,14 @@ wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
 ********************************************************/
 
 // to add new options, alter the menuSystem JSON object and make sure the sound files end up in the appropriate place
+var adviceFiles = [];
+fs.readdir('/home/pi/brownphone/raspi/feed/sounds', function(err, items) {
+    for (var i=0; i<items.length; i++) {
+        adviceFiles.push("feed/sounds/" + items[i]);
+    }
+    console.log(adviceFiles);
+});
+
 
 // any non-accounted for assumptions automatically kick you back to init
 var menuSystem = {
@@ -359,6 +368,11 @@ var menuSystem = {
                               "parent": "1_trees"
                         }
                   },
+      "2_advice": {
+            'file': adviceFiles,
+            'options': {}
+      },
+
       "3_story": {
       	"file": ["menusystem/3_story.wav","menusystem/3_story_2.wav","menusystem/3_story_3.wav"],
       	'options': {}
