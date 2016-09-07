@@ -116,7 +116,7 @@
 </div>
 
 </body>
-@if ( Config::get('app.debug') )
+@if ( env('APP_ENV') == 'local' )
   <script type="text/javascript">
     document.write('<script src="//localhost:35729/livereload.js?snipver=1" type="text/javascript"><\/script>')
   </script> 
