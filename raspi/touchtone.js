@@ -277,7 +277,7 @@ var menuSystem = {
             "file": "menusystem/mainmenu.wav",
             "options": {
                   "1": "1_trees",
-                  "2": "TODOadvice",
+                  "2": "2_advice",
                   "3": "3_story",
                   "4": "4_fact",
                   "5": "5_lie",
@@ -359,7 +359,6 @@ var menuSystem = {
                               "parent": "1_trees"
                         }
                   },
-
       "3_story": {
       	"file": ["menusystem/3_story.wav","menusystem/3_story_2.wav","menusystem/3_story_3.wav"],
       	'options': {}
