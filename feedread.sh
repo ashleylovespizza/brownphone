@@ -1,0 +1,1 @@
+#!/bin/bashecho "let's start the Matt Brown Phone"cd /home/pi/brownphone/raspisudo node feedreader.js
