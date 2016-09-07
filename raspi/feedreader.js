@@ -14,10 +14,10 @@ var oldFeedJSON
    ,newFeedJSON;
 var newSoundFiles = [];
 
-//start();
+start();
 //dontdownload();
 
-downloadAll();
+//downloadAll();
 
 function start(){
 
@@ -31,7 +31,7 @@ function start(){
 }
 
 
-
+//pullNewFeed();
 function pullNewFeed() {
 	// pull down new file
 	var localFeedFileName = "feed/new_feed.json"; //String(Date.now())+".json";
@@ -55,11 +55,12 @@ function dontdownload() {
 }
 
 
-
 function parseNewFeed() {
 	fs.readFile('feed/new_feed.json', 'utf8', function (err, data) {
 		if (err) throw err;
+		//console.log(typeof data);
 		newFeedJSON = JSON.parse(data);
+		console.log(newFeedJSON);
 		evaluateDiff();
 	})
 }
@@ -67,6 +68,7 @@ function parseNewFeed() {
 
 
 function evaluateDiff(){
+	console.log("evlauate diff!")
 	console.log(Object.size(oldFeedJSON));
 	console.log(typeof oldFeedJSON);
 
