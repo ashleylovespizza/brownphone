@@ -18,6 +18,7 @@ sudo node touchtone.js
 
 - script for the touchtone menu is located in /info/script.txt. To alter structure, mess with the JSON packet in /raspi/touchtone.js
 
+- cron stuff!  the script that starts the main file (touchtone.js) is in /brownphone/startPhone.sh. It's set to run in the cron:
 
 ## TODO!
 
