@@ -20,7 +20,7 @@ body {
 	margin-bottom: 100px;
 	background: url('/images/brownphone.png') no-repeat bottom center;
 	background-size:  300px auto;
-
+	//margin-top: -70px;
 	-webkit-animation: color_change 4s infinite alternate;
 	-moz-animation: color_change 4s infinite alternate;
 	-ms-animation: color_change 4s infinite alternate;
@@ -47,7 +47,7 @@ body {
 		margin-top: 0;
 	}
 }
-#recording, #submit {
+#recording, #submit, #upload-file {
 	font-family: 'Catamaran', Arial, sans-serif;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -59,7 +59,7 @@ body {
 	}
 	border: none;
 }
-#recording {
+#recording, #upload-file {
 	margin-top: 30px;
 		background: #674818;
 	&:hover {
@@ -68,7 +68,7 @@ body {
 
 }
 #submit {
-	margin-top: -23px;
+	margin-top: 50px;
 }
 #audio_container {
 	margin-top: 22px;
@@ -97,7 +97,14 @@ a{
 		color: #855d1f;
 	}
 }
-
+.past-recording {
+	float: none;
+}
+@media only screen and (min-width : 768px) {
+	.past-recording {
+		float: right;
+	}
+}
 
 @-webkit-keyframes color_change {
   from { background-color: $purple; }
@@ -118,4 +125,69 @@ a{
 @keyframes color_change {
   from { background-color: $purple; }
   to { background-color: $brownred; }
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.main-nav {
+	height: 50px;
+	position: absolute;
+	display: table;
+	width: 100%;
+	background-color: rgba(0,0,0,0);
+	.user-menu {
+		margin-bottom: 0;
+	    float: right;
+	    display: table;
+	    .dropdown-menu {
+			position: absolute;
+		    top: 0;
+		    right: 0;
+		    display: table;
+	    }
+	    .user-dropdown-menu {
+	    	&.open {
+	    		display: table;
+	    	}
+	    	display: none;
+	    	position: absolute;
+	    	right: 11px;
+	    	top: 50px;
+	    	li {
+	    		background-color: #eee;
+	    		padding: 5px;
+	    	}
+	    }
+	}	
+	.cointainer {
+		width: 100%;
+	}
+	margin-bottom: 0;
+	border: none;
+	.user-image {
+		&:hover {
+			color: none;
+			text-decoration: none;
+		}
+		display: table;
+	    padding: 13px;
+	}
 }

@@ -5795,7 +5795,7 @@ body {
   .submit_container button {
     margin-top: 0; }
 
-#recording, #submit {
+#recording, #submit, #upload-file {
   font-family: 'Catamaran', Arial, sans-serif;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -5803,17 +5803,17 @@ body {
   padding: 12px 24px;
   background: #b82a1b;
   border: none; }
-  #recording:hover, #submit:hover {
+  #recording:hover, #submit:hover, #upload-file:hover {
     background: #845ccd; }
 
-#recording {
+#recording, #upload-file {
   margin-top: 30px;
   background: #674818; }
-  #recording:hover {
+  #recording:hover, #upload-file:hover {
     background: #855d1f; }
 
 #submit {
-  margin-top: -23px; }
+  margin-top: 50px; }
 
 #audio_container {
   margin-top: 22px; }
@@ -5836,6 +5836,13 @@ a {
   .logout:hover, .logout:focus, .logout:active {
     color: #855d1f; }
 
+.past-recording {
+  float: none; }
+
+@media only screen and (min-width: 768px) {
+  .past-recording {
+    float: right; } }
+
 @-webkit-keyframes color_change {
   from {
     background-color: #845ccd; }
@@ -5847,5 +5854,60 @@ a {
     background-color: #845ccd; }
   to {
     background-color: #b82a1b; } }
+
+.btn-file {
+  position: relative;
+  overflow: hidden; }
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block; }
+
+.main-nav {
+  height: 50px;
+  position: absolute;
+  display: table;
+  width: 100%;
+  background-color: transparent;
+  margin-bottom: 0;
+  border: none; }
+  .main-nav .user-menu {
+    margin-bottom: 0;
+    float: right;
+    display: table; }
+    .main-nav .user-menu .dropdown-menu {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: table; }
+    .main-nav .user-menu .user-dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 11px;
+      top: 50px; }
+      .main-nav .user-menu .user-dropdown-menu.open {
+        display: table; }
+      .main-nav .user-menu .user-dropdown-menu li {
+        background-color: #eee;
+        padding: 5px; }
+  .main-nav .cointainer {
+    width: 100%; }
+  .main-nav .user-image {
+    display: table;
+    padding: 13px; }
+    .main-nav .user-image:hover {
+      color: none;
+      text-decoration: none; }
 
 /*# sourceMappingURL=app.css.map */

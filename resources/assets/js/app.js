@@ -3,6 +3,15 @@
 $(document).ready(function($) {
     
 
+    // ------------------------------------------------------------------------
+    var $menu = $('.user-dropdown-menu');
+    $(".user-image").click(function(event) {
+        event.preventDefault();
+        $menu.toggleClass('open');
+    });
+
+
+    // ------------------------------------------------------------------------
     function __log(e, data) {
         console.log(e + " " + (data || ''));
     }

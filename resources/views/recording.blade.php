@@ -28,73 +28,67 @@
 </head>
 <body>
 <div class="main test">
+		
+	<div class="main-nav" role="navigation">
+		<div class="container-fluid"> 
+		    <ul class="user-menu">
+		        <li class="list-unstyled">
+		            <a href="#" class="dropdown-toggle user-image" data-toggle="dropdown">
+		                <img width="30px" src="{{Auth::user()->avatar}}" class="img-circle"></img> 
+		            </a>
+		            <ul class="list-unstyled user-dropdown-menu">
+		                <li>{{Auth::user()->name}}</li>
+		                <li>{{Auth::user()->email}}</li>
+		                <li class="divider"></li>
+		                <li><a href="/logout" class="btn btn-danger btn-block">Sign Out</a></li>
+		            </ul>
+		        </li>
+		    </ul>
+		</div>
+	</div>
 
 	<div class="titlearea">
 		<span class="hidden">the brown phone</span>
 	</div>
+
+	{{--<div class="signed-in">
+		<img src="{{Auth::user()->avatar}}" class="img-circle"></img>
+		<h3>{{Auth::user()->name}}</h3>
+		<h5>{{Auth::user()->email}}</h5>
+		</div>--}}
 
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<form class="form-horizontal" method="POST">
 
-
 				<fieldset>
 				{{ csrf_field() }}
-
-				<!-- Text input-->
-				<div class="form-group">
-				  <label class="col-md-4 control-label" for="name">Name</label>  
-				  <div class="col-md-4">
-				  <input id="name" name="name" type="text" value="{{Auth::user()->name}}" placeholder="Name" class="form-control input-md">
-				  </div>
-				</div>
-
-				<!-- Text input-->
-				<div class="form-group">
-				  <label class="col-md-4 control-label" for="email">Email</label>  
-				  <div class="col-md-4">
-				  <input id="email" name="email" value="{{Auth::user()->email}}" type="text" placeholder="Email" class="form-control input-md">
-				  </div>
-				</div>
-
-			<div class="col-md-12 text-center"
-						<p>Record a piece of advice or something inspiring for Matt Brown to hear.</p>
-					</div>
+				<input id="name" name="name" type="hidden" value="{{Auth::user()->name}}" placeholder="Name" class="form-control input-md">
+				<input id="email" name="email" type="hidden" value="{{Auth::user()->email}}" placeholder="Email" class="form-control input-md">
+				
+				<p class="text-center">Record a piece of advice or something inspiring for Matt Brown to hear.</p>
 
 				<!-- record Button --> 
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="singlebutton">Recording</label>
-			  		<div class="col-md-4">
-			    		<button id="recording" name="recording" class="btn btn-defualt">Start Recording</button>
+		  		<div class="row">
+		  			<div class="col-sm-4 col-sm-offset-2 col-md-3 col-md-offset-3 col-lg-3 col-lg-offset-3 text-center">
+		    			<button id="recording" name="recording" class="btn btn-defualt">Start Recording</button>
+			  			<!-- recording --> 
+		  				<div id="recording-col"></div>
 			  		</div>
-				</div>
-
-				<!-- upload a recording --> 
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="singlebutton">Upload Recording</label>
-			  		<div class="col-md-4">
-					<input type="file" id="file-upload" name="audio_upload" accept="audio/*"></input>
+			  		<div class="col-sm-4 col-md-3 col-lg-3 text-center">
+						<div class="btn btn-default btn-file" id="upload-file">Upload Audio <input type="file" id="file-upload" name="audio_upload" accept="audio/*"></input></div>
 			  		</div>
-				</div>
-
-
-				<!-- recording --> 
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="singlebutton"></label>
-			  		<div class="col-md-4" id="recording-col">
-			  		</div>
-				</div>
-
+		  		</div>
 
 
 				<!-- Button -->
-				<div class="form-group">
-					<label class="col-md-4 control-label" for="singlebutton"></label>
-			  		<div class="col-md-4">
+				<div class="row">
+			  		<div class="col-sm-12 text-center">
 			    		<button id="submit" name="submit" class="btn btn-primary">Submit</button>
 			  		</div>
 				</div>
+
 				</fieldset>
 			</form>
 		</div>
@@ -106,7 +100,7 @@
 			<ul class="list-group">
 				@foreach (Auth::user()->recordings as $recording)
 					<li class="list-group-item recording-{{$recording->id}}">
-						<div class="pull-right">
+						<div class="past-recording">
 							<audio src="{{$recording->audio_file}}" controls></audio>
 						</div>	
 						
@@ -118,9 +112,6 @@
 			</ul>
 		</div>
 	</div>	
-
-
-	<a class="logout" href="/logout">Logout</a>
 
 </div>
 
