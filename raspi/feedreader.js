@@ -1,136 +1,83 @@
-var https = require('https');
+var request = require("request");
 var fs = require('fs');
-var diff = require('deep-diff').diff;
+var url = require('url');
+var path = require("path");
+var _ = require('lodash');
+var request = require('request');
 
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
+var recordingsPath = "./recordings";
+var localFiles = [];
+var feedURL = "http://thebrownphone.com/feed";
 
-var oldFeedJSON
-   ,newFeedJSON;
-var newSoundFiles = [];
+// ------------------------------------------------------------------------
+fs.readdir(recordingsPath, function(err, items) {
+    localFiles = items;
+    console.log("Local Files "+localFiles.length);
+    // now pull down the web and see if we have new files
+	pulldownFeed();
+});
 
-start();
-//dontdownload();
-
-//downloadAll();
-
-start();
-
-
-function start(){
-
-	// rename the last file to feed.json
-	fs.rename('feed/new_feed.json', 'feed/feed.json');
-	fs.readFile('feed/feed.json', 'utf8', function (err, data) {
-		if (err) throw err;
-		oldFeedJSON = JSON.parse(data);
-		pullNewFeed();
-	})
+// ------------------------------------------------------------------------
+function download(url, filename) {
+	request.get(url)
+		   .on('error', function(err) {
+		   		console.log("Error downloading");
+  			})
+	.pipe(fs.createWriteStream(recordingsPath+'/'+filename));
 }
 
+// ------------------------------------------------------------------------
+function pulldownFeed() {
+	console.log("Pull Down Feed");
+	request({
+	    url: feedURL,
+	    json: true
+	}, function (error, response, body) {
+	    if (!error && response.statusCode === 200) {
+			var json = response.body;
 
-//pullNewFeed();
-function pullNewFeed() {
-	// pull down new file
-	var localFeedFileName = "feed/new_feed.json"; //String(Date.now())+".json";
-	var localFeed = fs.createWriteStream(localFeedFileName);
-	var request = https.get('https://thebrownphone.herokuapp.com/feed', function(response){
-		response.pipe(localFeed);
-		localFeed.on('finish', function() {
-	      localFeed.close(parseNewFeed);  // close() is async, call cb after close completes.
-	    });
-	});
-}
+			// get the latest files
+			var latestFiles = [];
+			var latestFilenames = [];
 
-
-
-function dontdownload() {
-	fs.readFile('feed/feed.json', 'utf8', function (err, data) {
-		if (err) throw err;
-		oldFeedJSON = JSON.parse(data);
-		parseNewFeed();
-	})
-}
-
-
-function parseNewFeed() {
-	fs.readFile('feed/new_feed.json', 'utf8', function (err, data) {
-		if (err) throw err;
-		//console.log(typeof data);
-		newFeedJSON = JSON.parse(data);
-		console.log(newFeedJSON);
-		evaluateDiff();
-	})
-}
-
-
-
-function evaluateDiff(){
-	console.log("evlauate diff!")
-	console.log(Object.size(oldFeedJSON));
-	console.log(typeof oldFeedJSON);
-
-	if (Object.size(oldFeedJSON) < Object.size(newFeedJSON)) {
-		// more have been added, time to download
-		var differences = diff(oldFeedJSON, newFeedJSON);
-		for (var i=0; i<differences.length; i++) {
-			var currdiff = differences[i];
-			if (currdiff['kind'] != null && currdiff['kind'] == 'A' && currdiff['item'] != null) {
-						
-				newSoundFiles.push(currdiff['item']['rhs']['audio_file']);
-			//console.log(currdiff);
+			for (var i = 0; i < json.length; i++) {
+				var u = json[i].audio_file;
+				var filename = path.basename(u);
+				console.log("filename: "+filename);
+				latestFilenames.push(filename);
+				latestFiles.push({filename:filename, url:u});
 			}
 
-		}
 
-		downloadDifference();
-			
-	} else {
-		console.log("no diff");
-	}
+			for (var i = 0; i < latestFiles.length; i++) {
+				var newFilename = latestFiles[i].filename;
+				var u = latestFiles[i].url;
+				
+				// does this file exist in the local list
+				// if not download and save it localy
+				var exist = _.indexOf(localFiles, newFilename);
+				if(exist <= -1) {
+					console.log("Download this file: "+u);	
+					download(u, newFilename)
+				}
+				else {
+					console.log("File already downloaded");
+				}
+			}
+
+			// now check to see if any local files we have are no longer in the 
+			// feed. if so we want to remove these file
+			for (var i = 0; i < localFiles.length; i++) {
+				var filename = localFiles[i];
+				var exist = _.indexOf(latestFilenames, filename);
+				if(exist <= -1) {
+					console.log("Remove this file localy");
+					fs.unlinkSync(recordingsPath+'/'+filename);
+				}
+			}
+	    }
+	    else {
+	    	console.log("error");
+	    }
+	});
 }
-
-function downloadAll() {
-	fs.readFile('feed/new_feed.json', 'utf8', function (err, data) {
-		if (err) throw err;
-		newFeedJSON = JSON.parse(data);
-		
-		for (var i in newFeedJSON) {
-			newSoundFiles.push(newFeedJSON[i]['audio_file'])
-		}
-		console.log("about to download "+newSoundFiles.length()+" files");
-		downloadDifference();
-	})
-}
-
-function downloadDifference(){
-	var newsoundURL = newSoundFiles.pop();
-
-	if (newsoundURL != null) {
-			// download new wav files
-				// todo - might be nice to have these titled with their original .wav filenames
-				var localWavFileName = "feed/sounds/busy_new_" + String(Date.now()) + ".wav"; //String(Date.now())+".json";
-				var localFile = fs.createWriteStream(localWavFileName);
-				var request = https.get(newsoundURL, function(response){
-					response.pipe(localFile);
-					localFile.on('finish', function() {
-				        localFile.close();  // close() is async, call cb after close completes.
-
-				        // rename now that it's no longer busy
-				        var newWavFileName = localWavFileName.substring(17);
-						console.log(newWavFileName)	;
-						fs.rename(localWavFileName, 'feed/sounds/'+newWavFileName);
-						console.log("downloaded "+newWavFileName);
-						downloadDifference();
-				    });
-				});
-	}
-			
-}
-
-
