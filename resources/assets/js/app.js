@@ -23,7 +23,8 @@ $(document).ready(function($) {
     var currAudioBlob = null;
     var $form = $("form");
     var $submitButton = $("#submit");
-    var token = $('meta[name="csrf_token"]').attr('content')
+    var token = $('meta[name="csrf_token"]').attr('content');
+    console.log('csrf_token: '+token);
     $submitButton.hide();
 
     $('#file-upload').change(function(event) {
@@ -32,7 +33,7 @@ $(document).ready(function($) {
     $('.delete-recording').click(function(event) {
         event.preventDefault();
         var id = $(this).data('id');
-        var data = {_method: 'DELETE', '_token': token};
+        var data = {_method: 'DELETE', '_token': token, 'csrf_token': token};
         var $el = $('.recording-'+id);
         $.ajax({
             url: '/recordings/'+id,

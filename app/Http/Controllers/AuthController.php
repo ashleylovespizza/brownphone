@@ -68,6 +68,10 @@ class AuthController extends Controller
         	]);
         }
     	
+        // update the avatar image
+        $existing_user->avatar = $user->avatar;
+        $existing_user->save();
+        
     	Auth::login($existing_user, true);
     	return env('APP_ENV') == 'local' ? Redirect::to('/')->with(['user'=>$existing_user]) : Redirect::secure('/')->with(['user'=>$existing_user]);
         // $user->token;
