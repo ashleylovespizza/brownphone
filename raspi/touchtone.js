@@ -4,6 +4,7 @@ var events = require('events');
 var fs = require('fs');
 var eventEmitter = new events.EventEmitter();
 
+console.log("Touch Tone App Loaded");
 
 
 /********************************************************
@@ -126,12 +127,12 @@ function checkForPress() {
 
        	if (pressLocation.length > 0) {
        	//	console.log(pressLocation);
-                  var numPress = numPad[pressLocation[0]][pressLocation[1]];
+			var numPress = numPad[pressLocation[0]][pressLocation[1]];
        		console.log("The number "+numPad[pressLocation[0]][pressLocation[1]]+" has been pressed!");
        		resetPinGrid();
-
-                  eventEmitter.emit("numPress", String(numPress));
+       		eventEmitter.emit("numPress", String(numPress));
        	} else {
+			
        	}
 }
 
@@ -272,17 +273,21 @@ wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
 
 var recordings = [];
 var recordingsPath = "/home/pi/brownphone/raspi/recordings";
-
+var recordingsPlayIndex = 0;
+var inAdviceMode = false;
 // ------------------------------------------------------------------------
 function loadRecordingsFeed() {
+		recordingsPlayIndex = 0;
       fs.readdir(recordingsPath, function(err, items) {
-          for (var i=0; i<recordings.length; i++) {
+          for (var i=0; i<items.length; i++) {
               recordings.push(items[i]);
           }
+          recordings.reverse();
           console.log(recordings.length + " Recordings Loaded");
       });
 }
 // ------------------------------------------------------------------------
+
 
 
 // to add new options, alter the menuSystem JSON object and make sure the sound files end up in the appropriate place
@@ -421,7 +426,7 @@ var buttonTone = null;
 var buttonToneFiles
 
 // not working because it fires whether the sound completes naturally or i hit 'stop' on it...
-///b le r r g g g
+// b le r r g g g
 // currSound.on("complete", function(){
 //       console.log("done playing!");
 //       console.log(e);
@@ -434,10 +439,48 @@ var buttonToneFiles
 //       }
 // });
 
-function playMenuItem(menuItem){
-      if (currSound != null) {
+function stopAllAudio() {
+	if(nextRecordingTimeout) {
+		clearTimeout(nextRecordingTimeout);
+	}
+	  if (currSound != null) {
             currSound.stop();
+            currSound = null;
       } 
+}
+
+function playSoundFile(f) {
+	stopAllAudio();
+      currSound = new Sound(f);
+      currSound.play();
+      return currSound;
+}
+
+var nextRecordingTimeout = null;
+function playAdvice() {
+	if(inAdviceMode) {
+		stopAllAudio();
+		var currentRecording = recordings[recordingsPlayIndex];
+		playSoundFile(recordingsPath+"/"+currentRecording).on("complete", function() {
+			console.log("done with advice");
+			if(nextRecordingTimeout) {
+				clearTimeout(nextRecordingTimeout);
+			}
+			nextRecordingTimeout = setTimeout(function() {	
+				playAdvice();
+			}, 300);
+		});
+				
+		console.log(currentRecording);
+		console.log("Playing index "+recordingsPlayIndex);
+		recordingsPlayIndex ++;
+		recordingsPlayIndex %= recordings.length;
+	}
+}
+
+
+function playMenuItem(menuItem){
+      stopAllAudio(); 
       var currSoundFile = menuSystem[menuItem]['file'];
 
       // for many random files
@@ -445,18 +488,28 @@ function playMenuItem(menuItem){
             var len = currSoundFile.length;
             currSoundFile = menuSystem[menuItem]['file'][Math.floor(Math.random() * len)];
       }
-      console.log("play menu item: "+currSoundFile);
-      console.log("currSound: ");
-      console.log(currSound);
-      
+      if(currSound) {
+		console.log("play menu item: "+currSoundFile);
+		console.log("currSound: ");
+		console.log(currSound.filename);
+      }
       currSound = null;
       currSound = new Sound(currSoundFile);
       currMenuItem = menuItem;
       currSound.play();
 }
 
-eventEmitter.on("numPress", function(num){
-       if(num in menuSystem[currMenuItem]['options']) {
+eventEmitter.on("numPress", function(num) {
+		
+		inAdviceMode = false;
+		
+		// we want to handle the advice system
+		if(num == 2) {
+			inAdviceMode = true;
+			stopAllAudio();
+			playAdvice();
+		}
+		else if(num in menuSystem[currMenuItem]['options']) {
       //  see if there's some special option for you
             console.log("tryin to play this index: "+menuSystem[currMenuItem]['options'][num])
             playMenuItem(menuSystem[currMenuItem]['options'][num]);
@@ -477,13 +530,15 @@ eventEmitter.on("pickup", function(){
 
       loadRecordingsFeed();
 
-      //pickedup = true;
-      //playMenuItem("init");
+      pickedup = true;
+      playMenuItem("init");
 });
 
 // ------------------------------------------------------------------------
 eventEmitter.on("hangup", function(){
       // kill playing menu
+      inAdviceMode = false;
+      stopAllAudio();
       console.log("ccaught hangup");
       pickedup = false;
       if (currSound != null) {
