@@ -9,12 +9,19 @@ var recordingsPath = "./recordings";
 var localFiles = [];
 var feedURL = "http://thebrownphone.com/feed";
 
+console.log("-----------------------------------------");
+console.log(new Date());
+console.log("-----------------------------------------");
+
+
 // ------------------------------------------------------------------------
 fs.readdir(recordingsPath, function(err, items) {
-    localFiles = items;
-    console.log("Local Files "+localFiles.length);
-    // now pull down the web and see if we have new files
-	pulldownFeed();
+	if(items) {
+	    localFiles = items;
+	    console.log("Local Files "+localFiles.length);
+	    // now pull down the web and see if we have new files
+		pulldownFeed();
+	}
 });
 
 // ------------------------------------------------------------------------
@@ -81,3 +88,5 @@ function pulldownFeed() {
 	    }
 	});
 }
+
+console.log("-----------------------------------------");
