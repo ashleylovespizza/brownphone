@@ -69,6 +69,9 @@ $(document).ready(function($) {
             data.append('audio_name', moment().format('x')+"_audio.wav");
             data.append('audio_file', blob);
         }
+        data.append('_token', token);
+        data.append('csrf_token', token);
+        
         $.ajax({
             url: '/submit',
             type: 'POST',
