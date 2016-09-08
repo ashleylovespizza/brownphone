@@ -7,9 +7,32 @@ use Auth;
 use App\User;
 use Hash;
 use Redirect;
+use Config;
 
 class AuthController extends Controller
 {
+
+    protected $driver;
+    public function __construct()
+    {
+        $this->driver = $this->createGoogleDriver();
+    }
+
+    protected function createGoogleDriver()
+    {
+
+        $config = Config::get('services.google');
+        $config['redirect'] = $this->getRedirectURI();
+
+        return Socialite::buildProvider('Laravel\Socialite\Two\GoogleProvider', $config);
+    }
+
+    public function getRedirectURI()
+    {
+        $base_redirect_uri = env('APP_ENV')=='local'?url()->to('/'):url()->secure('/');
+        $redirect_uri = $base_redirect_uri.'/'.env('GOOGLE_REDIRECT');
+        return $redirect_uri;
+    }
     /**
      * Redirect the user to the GitHub authentication page.
      *
@@ -17,7 +40,7 @@ class AuthController extends Controller
      */
     public function redirectToProvider()
     {
-        return Socialite::driver('google')->redirect();
+        return $this->driver->redirect();
     }
 
     public function logout()
@@ -32,7 +55,7 @@ class AuthController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('google')->user();
+        $user = $this->driver->user();
         $existing_user = User::where('email', $user->email)->first();
 
         if(!$existing_user) {
