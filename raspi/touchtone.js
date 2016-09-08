@@ -271,7 +271,7 @@ wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
 ********************************************************/
 
 var recordings = [];
-var recordingsPath = "/home/pi/brownphone/raspi/feed/recordings";
+var recordingsPath = "/home/pi/brownphone/raspi/recordings";
 
 // ------------------------------------------------------------------------
 function loadRecordingsFeed() {
@@ -476,7 +476,7 @@ eventEmitter.on("pickup", function(){
       console.log("caught pickup");
 
       loadRecordingsFeed();
-      
+
       //pickedup = true;
       //playMenuItem("init");
 });
