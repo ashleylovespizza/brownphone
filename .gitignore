@@ -2,6 +2,7 @@
 /public/storage
 /vendor
 /.idea
+/raspi/recordings/*
 Homestead.json
 Homestead.yaml
 .env
