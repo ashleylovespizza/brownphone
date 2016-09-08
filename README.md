@@ -39,6 +39,16 @@ Things left to be done!
 - power supply is arriving at IDEO on Thursday, but any microusb supply should work
 
 
+// ------------------------------------------------------------------------
+
+add the check-feed.sh to the contab
+crontab -e
+* * * * * /home/pi/brownphone/check-feed.sh
+
+save the file and reboot the contab
+sudo service cron reload
+sudo service cron start
+
 
 
 

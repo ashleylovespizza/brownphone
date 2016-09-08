@@ -270,14 +270,23 @@ wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
 *********************  MENU SYSTEM FSM  *********************
 ********************************************************/
 
+var recordings = [];
+var recordingsPath = "/home/pi/brownphone/raspi/feed/recordings";
+
+// ------------------------------------------------------------------------
+function loadRecordingsFeed() {
+      fs.readdir(recordingsPath, function(err, items) {
+          for (var i=0; i<recordings.length; i++) {
+              recordings.push(items[i]);
+          }
+          console.log(recordings.length + " Recordings Loaded");
+      });
+}
+// ------------------------------------------------------------------------
+
+
 // to add new options, alter the menuSystem JSON object and make sure the sound files end up in the appropriate place
 var adviceFiles = [];
-fs.readdir('/home/pi/brownphone/raspi/feed/sounds', function(err, items) {
-    for (var i=0; i<items.length; i++) {
-        adviceFiles.push("feed/sounds/" + items[i]);
-    }
-    console.log(adviceFiles);
-});
 
 
 // any non-accounted for assumptions automatically kick you back to init
@@ -458,16 +467,21 @@ eventEmitter.on("numPress", function(num){
       // implied fallthrough - nothign happens if you press a key not associated with anything
 })
 
-
+// when the phone is piced up 
+// we want to load all the 
+// recordings and play the init message
+// ------------------------------------------------------------------------
 eventEmitter.on("pickup", function(){
       //start playing menu from the top
       console.log("caught pickup");
 
-      pickedup = true;
-      playMenuItem("init");
+      loadRecordingsFeed();
+      
+      //pickedup = true;
+      //playMenuItem("init");
 });
 
-
+// ------------------------------------------------------------------------
 eventEmitter.on("hangup", function(){
       // kill playing menu
       console.log("ccaught hangup");
