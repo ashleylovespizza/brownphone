@@ -26,6 +26,7 @@ wpi.pullUpDnControl(hangupPin, wpi.PUD_UP);
 ********************************************************/
 wpi.wiringPiISR(hangupPin, wpi.INT_EDGE_BOTH, function(delta) {
         var readval = wpi.digitalRead(hangupPin);
+        console.log(readval);
         if (readval == 1) {
             if (pickedup) {
                   console.log("phone hung up");

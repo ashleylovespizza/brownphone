@@ -1,4 +1,15 @@
-# brownphone
+# storyphone
+
+...from the top...
+
+- install raspbian on the pi.
+- do your:
+```
+sudo apt-get update
+sudo apt-get install nodejs npm node-semver
+npm install
+```
+
 
 ## Things To Know...
 
