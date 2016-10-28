@@ -17,6 +17,7 @@
     "http": "0.0.0",
     "https": "^1.0.0",
     "node-aplay": "^1.0.3",
+    "node-arecord": "0.0.2",
     "wiring-pi": ">=2.1.1"
   },
   "author": "ashleylovespizza",
