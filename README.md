@@ -6,10 +6,41 @@
 - do your:
 ```
 sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install rpi-update
+sudo apt-get install alsa-base alsa-utils
 sudo apt-get install nodejs npm node-semver
 npm install
 ```
+pi@raspberrypi:~ $ aplay -l
+**** List of PLAYBACK Hardware Devices ****
+card 0: ALSA [bcm2835 ALSA], device 0: bcm2835 ALSA [bcm2835 ALSA]
+  Subdevices: 8/8
+  Subdevice #0: subdevice #0
+  Subdevice #1: subdevice #1
+  Subdevice #2: subdevice #2
+  Subdevice #3: subdevice #3
+  Subdevice #4: subdevice #4
+  Subdevice #5: subdevice #5
+  Subdevice #6: subdevice #6
+  Subdevice #7: subdevice #7
+card 0: ALSA [bcm2835 ALSA], device 1: bcm2835 ALSA [bcm2835 IEC958/HDMI]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: Device [USB Audio Device], device 0: USB Audio [USB Audio]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+pi@raspberrypi:~ $ arecord -l
+**** List of CAPTURE Hardware Devices ****
+card 1: Device [USB Audio Device], device 0: USB Audio [USB Audio]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
 
+
+config files for alsa:
+
+/usr/share/alsa/alsa.conf
+/lib/modprobe.d/aliases.conf
 
 ## Things To Know...
 

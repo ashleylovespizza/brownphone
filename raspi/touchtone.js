@@ -4,6 +4,7 @@ var events = require('events');
 var fs = require('fs');
 var eventEmitter = new events.EventEmitter();
 
+var SOUND_DIR = '/home/pi/storyphone/raspi/sounds';
 
 
 /********************************************************
@@ -11,14 +12,14 @@ var eventEmitter = new events.EventEmitter();
 ********************************************************/
 //// GPIO pin of the button
 // check `gpio readall`  in the cli to check for the wPI numbers
-var row1Pin = 6
-  , row2Pin = 10
-  , row3Pin = 28
-  , row4Pin = 27
-  , col1Pin = 11
-  , col2Pin = 26
+var row1Pin = 21
+  , row2Pin = 22
+  , row3Pin = 23
+  , row4Pin = 24
+  , col1Pin = 25
+  , col2Pin = 28
   , col3Pin = 29
-  , hangupPin = 8;
+  , hangupPin = 25;
 
 // this seems insane but bear with me...
 // pinGrid is laid out so each pin location is represented by a [row, col] boolean set
@@ -54,27 +55,28 @@ var pickedup = false;
 
 
 wpi.setup('wpi');
+
 // pin setup stuff...
-wpi.pinMode(row1Pin, wpi.INPUT);
-wpi.pullUpDnControl(row1Pin, wpi.PUD_UP);
+// wpi.pinMode(row1Pin, wpi.INPUT);
+// wpi.pullUpDnControl(row1Pin, wpi.PUD_UP);
 
-wpi.pinMode(row2Pin, wpi.INPUT);
-wpi.pullUpDnControl(row2Pin, wpi.PUD_UP);
+// wpi.pinMode(row2Pin, wpi.INPUT);
+// wpi.pullUpDnControl(row2Pin, wpi.PUD_UP);
 
-wpi.pinMode(row3Pin, wpi.INPUT);
-wpi.pullUpDnControl(row3Pin, wpi.PUD_UP);
+// wpi.pinMode(row3Pin, wpi.INPUT);
+// wpi.pullUpDnControl(row3Pin, wpi.PUD_UP);
 
-wpi.pinMode(row4Pin, wpi.INPUT);
-wpi.pullUpDnControl(row4Pin, wpi.PUD_UP);
+// wpi.pinMode(row4Pin, wpi.INPUT);
+// wpi.pullUpDnControl(row4Pin, wpi.PUD_UP);
 
-wpi.pinMode(col1Pin, wpi.INPUT);
-wpi.pullUpDnControl(col1Pin, wpi.PUD_UP);
+// wpi.pinMode(col1Pin, wpi.INPUT);
+// wpi.pullUpDnControl(col1Pin, wpi.PUD_UP);
 
-wpi.pinMode(col2Pin, wpi.INPUT);
-wpi.pullUpDnControl(col2Pin, wpi.PUD_UP);
+// wpi.pinMode(col2Pin, wpi.INPUT);
+// wpi.pullUpDnControl(col2Pin, wpi.PUD_UP);
 
-wpi.pinMode(col3Pin, wpi.INPUT);
-wpi.pullUpDnControl(col3Pin, wpi.PUD_UP);
+// wpi.pinMode(col3Pin, wpi.INPUT);
+// wpi.pullUpDnControl(col3Pin, wpi.PUD_UP);
 
 wpi.pinMode(hangupPin, wpi.INPUT);
 wpi.pullUpDnControl(hangupPin, wpi.PUD_UP);
@@ -106,175 +108,175 @@ wpi.wiringPiISR(hangupPin, wpi.INT_EDGE_BOTH, function(delta) {
 *********************  KEYPAD CATCHER *******************
 ********************************************************/
 
-function resetPinGrid() {
-       	pinGrid = [ [[false, false, 0], [false,false, 0], [false,false, 0]]
-       			  , [[false, false, 0], [false,false, 0], [false,false, 0]]
-       			  , [[false, false, 0], [false,false, 0], [false,false, 0]]
-       			  , [[false, false, 0], [false,false, 0], [false,false, 0]]];
+// function resetPinGrid() {
+//        	pinGrid = [ [[false, false, 0], [false,false, 0], [false,false, 0]]
+//        			  , [[false, false, 0], [false,false, 0], [false,false, 0]]
+//        			  , [[false, false, 0], [false,false, 0], [false,false, 0]]
+//        			  , [[false, false, 0], [false,false, 0], [false,false, 0]]];
 
-}
+// }
 
-function checkForPress() {
-       	var pressLocation = [];
-       	for (var i = 0; i < 4; i++) {
-       		for (var j = 0; j < 3; j++) {
-       			if (pinGrid[i][j][0] && pinGrid[i][j][1]) {
-       				pressLocation = [i, j];
-       			}
-       		}
-       	}
+// function checkForPress() {
+//        	var pressLocation = [];
+//        	for (var i = 0; i < 4; i++) {
+//        		for (var j = 0; j < 3; j++) {
+//        			if (pinGrid[i][j][0] && pinGrid[i][j][1]) {
+//        				pressLocation = [i, j];
+//        			}
+//        		}
+//        	}
 
-       	if (pressLocation.length > 0) {
-       	//	console.log(pressLocation);
-                  var numPress = numPad[pressLocation[0]][pressLocation[1]];
-       		console.log("The number "+numPad[pressLocation[0]][pressLocation[1]]+" has been pressed!");
-       		resetPinGrid();
+//        	if (pressLocation.length > 0) {
+//        	//	console.log(pressLocation);
+//                   var numPress = numPad[pressLocation[0]][pressLocation[1]];
+//        		console.log("The number "+numPad[pressLocation[0]][pressLocation[1]]+" has been pressed!");
+//        		resetPinGrid();
 
-                  eventEmitter.emit("numPress", String(numPress));
-       	} else {
-       	}
-}
+//                   eventEmitter.emit("numPress", String(numPress));
+//        	} else {
+//        	}
+// }
 
-wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_RISING, function(delta) {
-       	if( wpi.digitalRead(row1Pin)){
-       		var now = Number(Date.now());
-       		//console.log("row 1: " + String(now - pinGrid[0][0][2])+", "+(now - pinGrid[0][1][2])+", "+(now - pinGrid[0][2][2]));
-       		//console.log(" ")
+// wpi.wiringPiISR(row1Pin, wpi.INT_EDGE_RISING, function(delta) {
+//        	if( wpi.digitalRead(row1Pin)){
+//        		var now = Number(Date.now());
+//        		//console.log("row 1: " + String(now - pinGrid[0][0][2])+", "+(now - pinGrid[0][1][2])+", "+(now - pinGrid[0][2][2]));
+//        		//console.log(" ")
 
-       		if (   now - row1Last > timeThreshhold) {
-       			//console.log("REAL PRESS!");
+//        		if (   now - row1Last > timeThreshhold) {
+//        			//console.log("REAL PRESS!");
 
-       	       	pinGrid[0][0][0] = true;
-       	       	pinGrid[0][1][0] = true;
-       	       	pinGrid[0][2][0] = true;
-       	       	checkForPress();
-       	    }
+//        	       	pinGrid[0][0][0] = true;
+//        	       	pinGrid[0][1][0] = true;
+//        	       	pinGrid[0][2][0] = true;
+//        	       	checkForPress();
+//        	    }
 
-       	    row1Last = now;
-       	}
-});
-wpi.wiringPiISR(row2Pin, wpi.INT_EDGE_RISING, function(delta) {
-       		if (wpi.digitalRead(row2Pin)){
-       			//console.log("row 2: "  );
-       			//console.log(" ")
+//        	    row1Last = now;
+//        	}
+// });
+// wpi.wiringPiISR(row2Pin, wpi.INT_EDGE_RISING, function(delta) {
+//        		if (wpi.digitalRead(row2Pin)){
+//        			//console.log("row 2: "  );
+//        			//console.log(" ")
 
-       			var now = Date.now();
-       			if (   now - row2Last > timeThreshhold) {
-       			//console.log("REAL PRESS!");
-       		       	pinGrid[1][0][0] = true;
-       		       	pinGrid[1][1][0] = true;
-       		       	pinGrid[1][2][0] = true;
-       		       	checkForPress();
-       			}
-       			row2Last = now;
+//        			var now = Date.now();
+//        			if (   now - row2Last > timeThreshhold) {
+//        			//console.log("REAL PRESS!");
+//        		       	pinGrid[1][0][0] = true;
+//        		       	pinGrid[1][1][0] = true;
+//        		       	pinGrid[1][2][0] = true;
+//        		       	checkForPress();
+//        			}
+//        			row2Last = now;
 
-       		}
-});
-wpi.wiringPiISR(row3Pin, wpi.INT_EDGE_RISING, function(delta) {
-       		if (wpi.digitalRead(row3Pin)){
-       			//console.log("row 3: "  );
-       			//console.log(" ")
+//        		}
+// });
+// wpi.wiringPiISR(row3Pin, wpi.INT_EDGE_RISING, function(delta) {
+//        		if (wpi.digitalRead(row3Pin)){
+//        			//console.log("row 3: "  );
+//        			//console.log(" ")
 
-       			var now = Date.now();
-       			if (   now - row3Last > timeThreshhold) {
-       			//console.log("REAL PRESS!");
-       		       	pinGrid[2][0][0] = true;
-       		       	pinGrid[2][1][0] = true;
-       		       	pinGrid[2][2][0] = true;
-       		       	checkForPress();
-       			}
-       			row3Last = now;
+//        			var now = Date.now();
+//        			if (   now - row3Last > timeThreshhold) {
+//        			//console.log("REAL PRESS!");
+//        		       	pinGrid[2][0][0] = true;
+//        		       	pinGrid[2][1][0] = true;
+//        		       	pinGrid[2][2][0] = true;
+//        		       	checkForPress();
+//        			}
+//        			row3Last = now;
 
-       		}
-});
-wpi.wiringPiISR(row4Pin, wpi.INT_EDGE_RISING, function(delta) {
-       		if (wpi.digitalRead(row4Pin)){
-       			//console.log("row 4: "  );
-       			//console.log(" ")
+//        		}
+// });
+// wpi.wiringPiISR(row4Pin, wpi.INT_EDGE_RISING, function(delta) {
+//        		if (wpi.digitalRead(row4Pin)){
+//        			//console.log("row 4: "  );
+//        			//console.log(" ")
 
-       			var now = Date.now();
-       			if (   now - row4Last > timeThreshhold) {
-       			//console.log("REAL PRESS!");
-       		       	pinGrid[3][0][0] = true;
-       		       	pinGrid[3][1][0] = true;
-       		       	pinGrid[3][2][0] = true;
-       		       	checkForPress();
-       			}
-       			row4Last = now;
+//        			var now = Date.now();
+//        			if (   now - row4Last > timeThreshhold) {
+//        			//console.log("REAL PRESS!");
+//        		       	pinGrid[3][0][0] = true;
+//        		       	pinGrid[3][1][0] = true;
+//        		       	pinGrid[3][2][0] = true;
+//        		       	checkForPress();
+//        			}
+//        			row4Last = now;
 
-       		}
-});
-
-
-wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_RISING, function(delta) {
-       	if (wpi.digitalRead(col1Pin) && delta > deltaVal){
-       		var now = Date.now();
-       		//console.log("col 1 : "+ String(now - pinGrid[0][0][2]) + ", "+ (now - pinGrid[1][0][2]) +" , "+(now - pinGrid[2][0][2]) +", "+(now - pinGrid[3][0][2]) );
-       		//console.log(" ")
-       		if (   now - col1Last > timeThreshhold) {
-       			//console.log("REAL PRESS!");
-       	       	pinGrid[0][0][1] = true;
-       	       	pinGrid[1][0][1] = true;
-       	       	pinGrid[2][0][1] = true;
-       	       	pinGrid[3][0][1] = true;
-
-       	       	checkForPress();
-       		}
-       	    col1Last = now;
-       	}
-});
-wpi.wiringPiISR(col2Pin, wpi.INT_EDGE_RISING, function(delta) {
-       	if ( wpi.digitalRead(col2Pin) ){
-       		var now = Date.now();
-       		//console.log("col 2 - "+now-col2Last);
-       	//     	console.log("col 2: " + String(now - pinGrid[0][1][2])  +", "+ (now - pinGrid[1][1][2])  +", "+ (now - pinGrid[2][1][2])  + ", "+ (now - pinGrid[3][1][2]) );
-       		//console.log(" ")
-
-       		if (   now - col2Last > timeThreshhold) {
-       			//console.log("REAL PRESS!");
-
-       	       		pinGrid[0][1][1] = true;
-       	       	pinGrid[1][1][1] = true;
-       	       	pinGrid[2][1][1] = true;
-       	       	pinGrid[3][1][1] = true;
-       	       	checkForPress();
-       		}
-       	    col2Last = now;
-       	}
-
-});
-wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
-       	if (wpi.digitalRead(col3Pin)) {
-       		//console.log("col 3: "+now-col3Last);
-
-       		var now = Date.now();
-       		if (   now - col3Last > timeThreshhold) {
-       			//console.log("REAL PRESS!");
-       	       	pinGrid[0][2][1] = true;
-       	       	pinGrid[1][2][1] = true;
-       	       	pinGrid[2][2][1] = true;
-       	       	pinGrid[3][2][1] = true;
-       	       	checkForPress();
-       		}
-       		col3Last = now;
-
-       	}
-
-});
+//        		}
+// });
 
 
+// wpi.wiringPiISR(col1Pin, wpi.INT_EDGE_RISING, function(delta) {
+//        	if (wpi.digitalRead(col1Pin) && delta > deltaVal){
+//        		var now = Date.now();
+//        		//console.log("col 1 : "+ String(now - pinGrid[0][0][2]) + ", "+ (now - pinGrid[1][0][2]) +" , "+(now - pinGrid[2][0][2]) +", "+(now - pinGrid[3][0][2]) );
+//        		//console.log(" ")
+//        		if (   now - col1Last > timeThreshhold) {
+//        			//console.log("REAL PRESS!");
+//        	       	pinGrid[0][0][1] = true;
+//        	       	pinGrid[1][0][1] = true;
+//        	       	pinGrid[2][0][1] = true;
+//        	       	pinGrid[3][0][1] = true;
+
+//        	       	checkForPress();
+//        		}
+//        	    col1Last = now;
+//        	}
+// });
+// wpi.wiringPiISR(col2Pin, wpi.INT_EDGE_RISING, function(delta) {
+//        	if ( wpi.digitalRead(col2Pin) ){
+//        		var now = Date.now();
+//        		//console.log("col 2 - "+now-col2Last);
+//        	//     	console.log("col 2: " + String(now - pinGrid[0][1][2])  +", "+ (now - pinGrid[1][1][2])  +", "+ (now - pinGrid[2][1][2])  + ", "+ (now - pinGrid[3][1][2]) );
+//        		//console.log(" ")
+
+//        		if (   now - col2Last > timeThreshhold) {
+//        			//console.log("REAL PRESS!");
+
+//        	       		pinGrid[0][1][1] = true;
+//        	       	pinGrid[1][1][1] = true;
+//        	       	pinGrid[2][1][1] = true;
+//        	       	pinGrid[3][1][1] = true;
+//        	       	checkForPress();
+//        		}
+//        	    col2Last = now;
+//        	}
+
+// });
+// wpi.wiringPiISR(col3Pin, wpi.INT_EDGE_RISING, function(delta) {
+//        	if (wpi.digitalRead(col3Pin)) {
+//        		//console.log("col 3: "+now-col3Last);
+
+//        		var now = Date.now();
+//        		if (   now - col3Last > timeThreshhold) {
+//        			//console.log("REAL PRESS!");
+//        	       	pinGrid[0][2][1] = true;
+//        	       	pinGrid[1][2][1] = true;
+//        	       	pinGrid[2][2][1] = true;
+//        	       	pinGrid[3][2][1] = true;
+//        	       	checkForPress();
+//        		}
+//        		col3Last = now;
+
+//        	}
+
+// });
 
 
 
-/********************************************************
-*********************  MENU SYSTEM FSM  *********************
-********************************************************/
 
-// to add new options, alter the menuSystem JSON object and make sure the sound files end up in the appropriate place
+
+// /********************************************************
+// *********************  MENU SYSTEM FSM  *********************
+// ********************************************************/
+
+// // to add new options, alter the menuSystem JSON object and make sure the sound files end up in the appropriate place
 var adviceFiles = [];
-fs.readdir('/home/pi/brownphone/raspi/feed/sounds', function(err, items) {
+fs.readdir(SOUND_DIR, function(err, items) {
     for (var i=0; i<items.length; i++) {
-        adviceFiles.push("feed/sounds/" + items[i]);
+        adviceFiles.push("sounds/" + items[i]);
     }
     console.log(adviceFiles);
 });
@@ -283,7 +285,7 @@ fs.readdir('/home/pi/brownphone/raspi/feed/sounds', function(err, items) {
 // any non-accounted for assumptions automatically kick you back to init
 var menuSystem = {
       "init": {
-            "file": "menusystem/mainmenu.wav",
+            "file": "mainmenu.wav",
             "options": {
                   "1": "1_trees",
                   "2": "2_advice",
@@ -408,22 +410,22 @@ var menuSystem = {
 };
 var currMenuItem;
 var currSound = null;
-var buttonTone = null;
-var buttonToneFiles
+// var buttonTone = null;
+// var buttonToneFiles
 
-// not working because it fires whether the sound completes naturally or i hit 'stop' on it...
-///b le r r g g g
-// currSound.on("complete", function(){
-//       console.log("done playing!");
-//       console.log(e);
-//      //done playing!  go back to your parent, if that exists...
-//       if ('parent' in menuSystem[currMenuItem]['options']) {
-//             playMenuItem(menuSystem[currMenuItem]['options']['parent']);
-//       } else {
-//             // if nothing is specified, back to the top
-//             playMenuItem("init");
-//       }
-// });
+// // not working because it fires whether the sound completes naturally or i hit 'stop' on it...
+// ///b le r r g g g
+// // currSound.on("complete", function(){
+// //       console.log("done playing!");
+// //       console.log(e);
+// //      //done playing!  go back to your parent, if that exists...
+// //       if ('parent' in menuSystem[currMenuItem]['options']) {
+// //             playMenuItem(menuSystem[currMenuItem]['options']['parent']);
+// //       } else {
+// //             // if nothing is specified, back to the top
+// //             playMenuItem("init");
+// //       }
+// // });
 
 function playMenuItem(menuItem){
       if (currSound != null) {
@@ -446,17 +448,17 @@ function playMenuItem(menuItem){
       currSound.play();
 }
 
-eventEmitter.on("numPress", function(num){
-       if(num in menuSystem[currMenuItem]['options']) {
-      //  see if there's some special option for you
-            console.log("tryin to play this index: "+menuSystem[currMenuItem]['options'][num])
-            playMenuItem(menuSystem[currMenuItem]['options'][num]);
-      } else if (num == "-1" || num == "-2") {
-      // * always kicks you back up to the very top
-            playMenuItem("init");
-      }
-      // implied fallthrough - nothign happens if you press a key not associated with anything
-})
+// eventEmitter.on("numPress", function(num){
+//        if(num in menuSystem[currMenuItem]['options']) {
+//       //  see if there's some special option for you
+//             console.log("tryin to play this index: "+menuSystem[currMenuItem]['options'][num])
+//             playMenuItem(menuSystem[currMenuItem]['options'][num]);
+//       } else if (num == "-1" || num == "-2") {
+//       // * always kicks you back up to the very top
+//             playMenuItem("init");
+//       }
+//       // implied fallthrough - nothign happens if you press a key not associated with anything
+// })
 
 
 eventEmitter.on("pickup", function(){
