@@ -1,5 +1,6 @@
 var wpi = require('wiring-pi');
 var Sound = require('node-aplay');
+var Recording = require('node-arecord');
 var events = require('events');
 var fs = require('fs');
 var eventEmitter = new events.EventEmitter();
@@ -14,6 +15,7 @@ var eventEmitter = new events.EventEmitter();
 
 var hangupPin = 15;
 var pickedup = false;
+var _INTERVALMAX = 30;
 
 
 // this seems insane but bear with me...
@@ -50,6 +52,7 @@ var numPad =  [ [1, 2, 3]
 // keep track of timing...
 var currNumPress = null;
 
+var currSound = null;
 
 
 //// SET UP PINS
@@ -106,14 +109,14 @@ eventEmitter.on("pickup", function(){
       console.log("caught pickup");
 
       pickedup = true;
-    //  playMenuItem("init");
+   //   playMenuItem("init");
 });
 
 
 
 eventEmitter.on("hangup", function(){
       // kill playing menu
-      console.log("ccaught hangup");
+      console.log("caught hangup");
       pickedup = false;
    //   if (currSound != null) {
    //         currSound.stop();
@@ -128,61 +131,110 @@ eventEmitter.on("hangup", function(){
 ********************************************************/
 
 
+eventEmitter.on("numPress", function(num){
+      if (num == 1) {
+        playMenuItem("whatever");
+      } else if (num == 2) {
+        startRecording("filename");
+      }
+      //  if(num in menuSystem[currMenuItem]['options']) {
+      // //  see if there's some special option for you
+      //       console.log("tryin to play this index: "+menuSystem[currMenuItem]['options'][num])
+      //       playMenuItem(menuSystem[currMenuItem]['options'][num]);
+      // } else if (num == "-1" || num == "-2") {
+      // // * always kicks you back up to the very top
+      //       playMenuItem("init");
+      // }
+      // // implied fallthrough - nothign happens if you press a key not associated with anything
+})
+
+
+var intervalMax = _INTERVALMAX;
+
 setInterval(function(){ 
-    wpi.digitalWrite(rows[0], 1);
-    wpi.digitalWrite(rows[1], 1);
-    wpi.digitalWrite(rows[2], 1);
-    wpi.digitalWrite(rows[3], 1);
+  wpi.digitalWrite(rows[0], 1);
+  wpi.digitalWrite(rows[1], 1);
+  wpi.digitalWrite(rows[2], 1);
+  wpi.digitalWrite(rows[3], 1);
     
-  //var wires = [21,22,23,24,25,28,29]
   for (i in rows) {
     wpi.digitalWrite(rows[0], 1);
     wpi.digitalWrite(rows[1], 1);
     wpi.digitalWrite(rows[2], 1);
     wpi.digitalWrite(rows[3], 1);
-  //  var val = wpi.digitalRead(wires[i]);
+
     wpi.digitalWrite(rows[i], 0);
-    //var reader = wpi.digitalRead(rows[i]);
-     // console.log(rows[i]+" is "+reader);
+
     for (j in cols) {
       var reader = wpi.digitalRead(cols[j]);
   
-  // this is still kinda stuck
-  // base you need to see if a keypress is still ongoing...
-  // so you need to test only the single combo you're on before reseting yo
-      if (reader == 0 && currNumPress == null) {
+      if (reader == 0 ) {
         // BUTTON IS PRESSED!
+
         var numPress = numPad[i][j];
-        console.log("PRESSED!!! "+numPress);
-        currNumPress = numPress;
-        eventEmitter.emit("numPress", String(numPress));
-      }   else {
-        console.log("reset");
-        currNumPress = null;
+
+        if (!(numPress == currNumPress && intervalMax > 0)) {
+           console.log("PRESSED!!! "+numPress);
+          currNumPress = numPress;
+          eventEmitter.emit("numPress", String(numPress));
+        }
+
+        intervalMax = _INTERVALMAX;
+       
+      } else {
+          intervalMax--;
       } 
 
     }
   }
-}, 50);
+}, 80);
 
 
-function checkForPressGroundedCircuit() {
-         var pressLocation = [];
-         for (var i = 0; i < 4; i++) {
-           for (var j = 0; j < 3; j++) {
-             if (pinGrid[i][j][0] && pinGrid[i][j][1]) {
-               pressLocation = [i, j];
-             }
-           }
-         }
 
-         if (pressLocation.length > 0) {
-         //  console.log(pressLocation);
-                  var numPress = numPad[pressLocation[0]][pressLocation[1]];
-                 console.log("The number "+numPad[pressLocation[0]][pressLocation[1]]+" has been pressed!");
-                  eventEmitter.emit("numPress", String(numPress));
-         } else {
-         }
+
+function startRecording(filename) {
+
+  var newsound = new Recording({
+   debug: true,    // Show stdout 
+   destination_folder: '/home/pi/storyphone/raspi/sounds/recordings',
+   filename: filename+'.wav',
+   alsa_format: 'dat',
+   alsa_device: 'plughw:1,0',
+   debug: true
+  });
+   
+  newsound.record();
+  setTimeout(function () {
+      newsound.stop(); // stop after ten seconds 
+  }, 5000);
+   
+  // you can also listen for various callbacks: 
+  newsound.on('complete', function () {
+      console.log('Done with recording!');
+  });
+
+
 }
 
 
+function playMenuItem(menuItem){
+      if (currSound != null) {
+            currSound.stop();
+      } 
+      // var currSoundFile = menuSystem[menuItem]['file'];
+
+      // // for many random files
+      // if (typeof currSoundFile != 'string') {
+      //       var len = currSoundFile.length;
+      //       currSoundFile = menuSystem[menuItem]['file'][Math.floor(Math.random() * len)];
+      // }
+      // console.log("play menu item: "+currSoundFile);
+      // console.log("currSound: ");
+      // console.log(currSound);
+      var currSoundFile = 'test2.wav';
+      currSound = null;
+      currSound = new Sound(currSoundFile);
+      currMenuItem = menuItem;
+      console.log("playing "+currSound);
+      currSound.play();
+}
