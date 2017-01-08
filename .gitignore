@@ -45,5 +45,5 @@ jspm_packages
 .node_repl_history
 
 #sound wavfiles
-raspi/feed/sounds
-
+raspi/sounds/stories
+raspy/sounds

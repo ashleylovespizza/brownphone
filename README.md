@@ -34,6 +34,8 @@ sudo node touchtone.js
 @reboot echo "it ran" > /home/pi/reboot.txt 2>&1
 30 4 * * * /home/pi/brownphone/shutdown.sh
 
+- set arecord volume
+amixer -c 0 cset numid=8,iface=MIXER,name='Mic Capture Volume' 7
 
 ## TODO!
 
